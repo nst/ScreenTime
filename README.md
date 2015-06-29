@@ -1,2 +1,3 @@
 # ScreenTime
-create movies from periodic screenshots
+
+homepage: [http://seriot.ch/screentime/](http://seriot.ch/screentime/)
