@@ -81,8 +81,13 @@
 
 - (void)makeScreenshotsAndConsolidate {
     
-    if([[NSUserDefaults standardUserDefaults] boolForKey:@"IgnoreScreensaver"] && [self isRunningScreensaver]) {
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"SkipScreensaver"] && [self isRunningScreensaver]) {
         NSLog(@"-- ignore screensaver");
+        return;
+    }
+    
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"PauseCapture"]) {
+        NSLog(@"-- capture pause prevented screenshot");
         return;
     }
     
