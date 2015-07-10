@@ -67,16 +67,16 @@
     [_menu setDelegate:self];
     
     /**/
+
+    [self startTimer];
+
+    /**/
     
     [self updateStartAtLauchMenuItemState];
     
     [self updateSkipScreensaverMenuItemState];
     
     [self updatePauseCaptureMenuItemState];
-    
-    /**/
-    
-    [self startTimer];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -84,6 +84,7 @@
 }
 
 - (void)startTimer {
+    NSLog(@"-- startTimer");
     
     SRTScreenShooter *screenShooter = [[SRTScreenShooter alloc] initWithDirectory:_dirPath];
     if(screenShooter == nil) {
@@ -106,6 +107,8 @@
 }
 
 - (void)stopTimer {
+    NSLog(@"-- stopTimer");
+    
     [_timer invalidate];
     self.timer = nil;
 }
@@ -127,9 +130,9 @@
 }
 
 - (void)updatePauseCaptureMenuItemState {
-    BOOL pauseCapture = [[NSUserDefaults standardUserDefaults] boolForKey:@"PauseCapture"];
+    BOOL captureIsPaused = self.timer == nil;
     
-    NSInteger state = pauseCapture ? NSOnState : NSOffState;
+    NSInteger state = captureIsPaused ? NSOnState : NSOffState;
     
     [_pauseCaptureMenuItem setState:state];
 }
@@ -216,12 +219,14 @@
 }
 
 - (IBAction)togglePause:(id)sender {
-    BOOL pauseCapture = [[NSUserDefaults standardUserDefaults] boolForKey:@"PauseCapture"];
+    BOOL captureIsPaused = self.timer == nil;
+    
+    if(captureIsPaused) {
+        [self startTimer];
+    } else {
+        [self stopTimer];
+    }
 
-    [[NSUserDefaults standardUserDefaults] setBool:!pauseCapture forKey:@"PauseCapture"];
-    
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
     [self updatePauseCaptureMenuItemState];
 }
 
