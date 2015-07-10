@@ -13,6 +13,7 @@
 @property (strong, nonatomic) IBOutlet NSMenu *menu;
 @property (strong, nonatomic) IBOutlet NSMenuItem *skipScreensaverMenuItem;
 @property (strong, nonatomic) IBOutlet NSMenuItem *startAtLaunchMenuItem;
+@property (strong, nonatomic) IBOutlet NSMenuItem *pauseCaptureMenuItem;
 
 - (IBAction)about:(id)sender;
 - (IBAction)openFolder:(id)sender;

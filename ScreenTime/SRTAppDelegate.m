@@ -72,6 +72,8 @@
     
     [self updateSkipScreensaverMenuItemState];
     
+    [self updatePauseCaptureMenuItemState];
+    
     /**/
     
     [self startTimer];
@@ -122,6 +124,14 @@
     NSInteger state = skipScreensaver ? NSOnState : NSOffState;
     
     [_skipScreensaverMenuItem setState:state];
+}
+
+- (void)updatePauseCaptureMenuItemState {
+    BOOL pauseCapture = [[NSUserDefaults standardUserDefaults] boolForKey:@"PauseCapture"];
+    
+    NSInteger state = pauseCapture ? NSOnState : NSOffState;
+    
+    [_pauseCaptureMenuItem setState:state];
 }
 
 - (IBAction)about:(id)sender {
@@ -203,6 +213,16 @@
     };
     
     [r startAsynchronous];
+}
+
+- (IBAction)togglePause:(id)sender {
+    BOOL pauseCapture = [[NSUserDefaults standardUserDefaults] boolForKey:@"PauseCapture"];
+
+    [[NSUserDefaults standardUserDefaults] setBool:!pauseCapture forKey:@"PauseCapture"];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self updatePauseCaptureMenuItemState];
 }
 
 - (IBAction)quit:(id)sender {
