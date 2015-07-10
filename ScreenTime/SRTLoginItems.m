@@ -43,7 +43,7 @@
 
 + (void)enableLoginItem {
     
-    NSLog(@"-- enableLoginItemW");
+    NSLog(@"-- enableLoginItem");
     
     LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     if(loginItems == NULL) return;

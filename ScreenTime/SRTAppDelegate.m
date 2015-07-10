@@ -114,8 +114,8 @@
     
     // TODO: refresh at each time the menu is opened
     
-    BOOL startAtLaunch = [SRTLoginItems loginItemIsEnabled];
-    [_startAtLaunchMenuItem setState: (startAtLaunch ? NSOnState : NSOffState) ];
+    BOOL startAtLogin = [SRTLoginItems loginItemIsEnabled];
+    [_startAtLoginMenuItem setState: (startAtLogin ? NSOnState : NSOffState) ];
 }
 
 - (void)updateSkipScreensaverMenuItemState {
@@ -153,11 +153,11 @@
     [self updateSkipScreensaverMenuItemState];
 }
 
-- (IBAction)toggleStartAtLaunch:(id)sender {
+- (IBAction)toggleStartAtLogin:(id)sender {
     
-    BOOL startAtLaunch = [SRTLoginItems loginItemIsEnabled];
+    BOOL startAtLogin = [SRTLoginItems loginItemIsEnabled];
     
-    if (startAtLaunch) {
+    if (startAtLogin) {
         [SRTLoginItems disableLoginItem];
     } else {
         [SRTLoginItems enableLoginItem];
