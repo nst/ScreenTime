@@ -221,13 +221,18 @@
 }
 
 - (IBAction)togglePause:(id)sender {
-    BOOL captureIsPaused = self.timer == nil;
-    
-    if(captureIsPaused) {
+    BOOL captureWasPaused = self.timer == nil;
+
+    if(captureWasPaused) {
         [self startTimer];
     } else {
         [self stopTimer];
     }
+
+    NSString *imageName = captureWasPaused ? @"ScreenTime.png" : @"ScreenTimePaused.png";
+    NSImage *iconImage = [NSImage imageNamed:imageName];
+    iconImage.template = YES;
+    self.statusItem.image = iconImage;
 
     [self updatePauseCaptureMenuItemState];
 }
