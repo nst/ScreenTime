@@ -13,6 +13,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="SRTAppDelegate">
             <connections>
+                <outlet property="aboutScreenTimeMenuItem" destination="gwv-VI-Vzr" id="Wkz-XV-WIW"/>
                 <outlet property="menu" destination="eZW-AR-iR1" id="7hE-09-ZMB"/>
                 <outlet property="pauseCaptureMenuItem" destination="InH-aV-sS6" id="CkL-gQ-mzy"/>
                 <outlet property="skipScreensaverMenuItem" destination="ZC0-LZ-q5p" id="Ahq-sS-J4f"/>

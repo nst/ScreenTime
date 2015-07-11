@@ -58,6 +58,8 @@
     NSImage *iconImage = [NSImage imageNamed:@"ScreenTime.png"];
     iconImage.template = YES;
     
+    _aboutScreenTimeMenuItem.title = [NSString stringWithFormat:@"About ScreenTime %@", currentVersionString];
+    
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     _statusItem.image = iconImage;
     _statusItem.highlightMode = YES;
