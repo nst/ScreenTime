@@ -12,6 +12,7 @@
 #import "STHTTPRequest.h"
 
 @interface SRTAppDelegate ()
+@property (nonatomic, strong) SRTScreenShooter *screenShooter;
 @property (nonatomic, strong) NSStatusItem *statusItem;
 @property (nonatomic, strong) NSString *dirPath;
 @property (nonatomic, strong) NSTimer *timer;
@@ -88,18 +89,18 @@
 - (void)startTimer {
     NSLog(@"-- startTimer");
     
-    SRTScreenShooter *screenShooter = [[SRTScreenShooter alloc] initWithDirectory:_dirPath];
-    if(screenShooter == nil) {
+    self.screenShooter = [[SRTScreenShooter alloc] initWithDirectory:_dirPath];
+    if(_screenShooter == nil) {
         NSLog(@"-- cannot use screenshooter, exit");
         exit(1); // TODO: show NSAlert?
     }
     
-    [screenShooter makeScreenshotsAndConsolidate];
+    [_screenShooter makeScreenshotsAndConsolidate];
     
     NSUInteger timeInterval = [[NSUserDefaults standardUserDefaults] integerForKey:@"SecondsBetweenScreenshots"];
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:timeInterval
-                                                  target:screenShooter
+                                                  target:_screenShooter
                                                 selector:@selector(makeScreenshotsAndConsolidate)
                                                 userInfo:nil
                                                  repeats:YES];
@@ -244,7 +245,15 @@
 #pragma mark NSMenuDelegate
 
 - (void)menuWillOpen:(NSMenu *)menu {
+    
     [self updateStartAtLauchMenuItemState];
+    
+    NSEventModifierFlags modifierFlags = [[NSApp currentEvent] modifierFlags];
+    BOOL optionKeyIsPressed = (modifierFlags & kCGEventFlagMaskAlternate) == kCGEventFlagMaskAlternate;
+
+    if(optionKeyIsPressed) {
+        [_screenShooter makeScreenshotsAndConsolidate];
+    }
 }
 
 @end
