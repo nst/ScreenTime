@@ -11,7 +11,7 @@
 @interface SRTAppDelegate : NSObject <NSApplicationDelegate, NSMenuDelegate>
 
 @property (strong, nonatomic) IBOutlet NSMenu *menu;
-@property (strong, nonatomic) IBOutlet NSMenuItem *aboutScreenTimeMenuItem;
+@property (strong, nonatomic) IBOutlet NSMenuItem *versionMenuItem;
 @property (strong, nonatomic) IBOutlet NSMenuItem *skipScreensaverMenuItem;
 @property (strong, nonatomic) IBOutlet NSMenuItem *startAtLoginMenuItem;
 @property (strong, nonatomic) IBOutlet NSMenuItem *pauseCaptureMenuItem;

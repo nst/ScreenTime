@@ -59,7 +59,7 @@
     NSImage *iconImage = [NSImage imageNamed:@"ScreenTime.png"];
     iconImage.template = YES;
     
-    _aboutScreenTimeMenuItem.title = [NSString stringWithFormat:@"About ScreenTime %@", currentVersionString];
+    self.versionMenuItem.title = [NSString stringWithFormat:@"Version %@", currentVersionString];
     
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     _statusItem.image = iconImage;
@@ -254,6 +254,8 @@
     if(optionKeyIsPressed) {
         [_screenShooter makeScreenshotsAndConsolidate];
     }
+
+    [self.versionMenuItem setHidden:(optionKeyIsPressed == NO)];
 }
 
 @end
