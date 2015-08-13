@@ -75,7 +75,7 @@
 
     /**/
     
-    [self updateStartAtLauchMenuItemState];
+    [self updateStartAtLaunchMenuItemState];
     
     [self updateSkipScreensaverMenuItemState];
     
@@ -116,10 +116,7 @@
     self.timer = nil;
 }
 
-- (void)updateStartAtLauchMenuItemState {
-    
-    // TODO: refresh at each time the menu is opened
-    
+- (void)updateStartAtLaunchMenuItemState {
     BOOL startAtLogin = [SRTLoginItems loginItemIsEnabled];
     [_startAtLoginMenuItem setState: (startAtLogin ? NSOnState : NSOffState) ];
 }
@@ -169,7 +166,7 @@
         [SRTLoginItems enableLoginItem];
     }
     
-    [self updateStartAtLauchMenuItemState];
+    [self updateStartAtLaunchMenuItemState];
 }
 
 - (void)checkForUpdates {
@@ -246,7 +243,7 @@
 
 - (void)menuWillOpen:(NSMenu *)menu {
     
-    [self updateStartAtLauchMenuItemState];
+    [self updateStartAtLaunchMenuItemState];
     
     NSEventModifierFlags modifierFlags = [[NSApp currentEvent] modifierFlags];
     BOOL optionKeyIsPressed = (modifierFlags & kCGEventFlagMaskAlternate) == kCGEventFlagMaskAlternate;
