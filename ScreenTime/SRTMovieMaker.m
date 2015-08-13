@@ -6,8 +6,6 @@
 //  Copyright © 2015 Nicolas Seriot. All rights reserved.
 //
 
-// inspired from
-
 #import "SRTMovieMaker.h"
 
 @import AppKit;

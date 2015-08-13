@@ -104,14 +104,14 @@ void writeMovieFromJpgPaths(NSString *dirPath, NSArray *jpgPaths, NSString *movi
 }
 
 /*
- consolidatepastassets
+ consolidate past assets
  
  for each past day
- make hour movie from day images
- make day movie from hour movies
+ ...make hour movie from day images
+ ...make day movie from hour movies
  
  for each today past hour
- make hour movie
+ ...make hour movie
  */
 
 @interface SRTConsolidator ()

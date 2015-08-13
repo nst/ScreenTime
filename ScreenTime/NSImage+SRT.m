@@ -10,7 +10,7 @@
 
 @implementation NSImage (SRT)
 
-- (BOOL)writeAsJpegAtPath:(NSString *)path {
+- (BOOL)srt_writeAsJpegAtPath:(NSString *)path {
     NSData *imageData = [self TIFFRepresentation];
     NSBitmapImageRep *bitmapRep = [NSBitmapImageRep imageRepWithData:imageData];
     NSDictionary *properties = @{ NSImageCompressionFactor : @0.8 };

@@ -10,6 +10,6 @@
 
 @interface NSImage (SRT)
 
-- (BOOL)writeAsJpegAtPath:(NSString*)path;
+- (BOOL)srt_writeAsJpegAtPath:(NSString *)path;
 
 @end

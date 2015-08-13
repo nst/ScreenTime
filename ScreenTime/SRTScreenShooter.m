@@ -57,7 +57,7 @@
     
     NSString *path = [_directoryPath stringByAppendingPathComponent:filename];
     
-    BOOL success = [image writeAsJpegAtPath:path];
+    BOOL success = [image srt_writeAsJpegAtPath:path];
     
     if(success) {
         NSLog(@"-- write %@", path);
