@@ -250,8 +250,9 @@
     
     NSEventModifierFlags modifierFlags = [[NSApp currentEvent] modifierFlags];
     BOOL optionKeyIsPressed = (modifierFlags & kCGEventFlagMaskAlternate) == kCGEventFlagMaskAlternate;
-
-    if(optionKeyIsPressed) {
+    BOOL commandKeyIsPressed = (modifierFlags & kCGEventFlagMaskCommand) == kCGEventFlagMaskCommand;
+    
+    if(optionKeyIsPressed && commandKeyIsPressed) {
         [_screenShooter makeScreenshotsAndConsolidate];
     }
 
