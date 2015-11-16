@@ -23,6 +23,8 @@
 		0375A74A1B4037C90011BE5C /* SRTMovieMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A7381B4037970011BE5C /* SRTMovieMaker.m */; };
 		0375A74B1B4037C90011BE5C /* SRTConsolidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A73A1B4037970011BE5C /* SRTConsolidator.m */; };
 		039655401B50F4F0002C83A2 /* ScreenTimePaused.png in Resources */ = {isa = PBXBuildFile; fileRef = 0396553F1B50F4F0002C83A2 /* ScreenTimePaused.png */; };
+		03979F151BFA796F00C6DF09 /* ScreenTime@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03979F131BFA796F00C6DF09 /* ScreenTime@2x.png */; };
+		03979F161BFA796F00C6DF09 /* ScreenTimePaused@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03979F141BFA796F00C6DF09 /* ScreenTimePaused@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +64,8 @@
 		0375A73F1B4037970011BE5C /* SRTAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRTAppDelegate.h; sourceTree = "<group>"; };
 		0375A7401B4037970011BE5C /* SRTAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRTAppDelegate.m; sourceTree = "<group>"; };
 		0396553F1B50F4F0002C83A2 /* ScreenTimePaused.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ScreenTimePaused.png; sourceTree = "<group>"; };
+		03979F131BFA796F00C6DF09 /* ScreenTime@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScreenTime@2x.png"; sourceTree = "<group>"; };
+		03979F141BFA796F00C6DF09 /* ScreenTimePaused@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScreenTimePaused@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +109,8 @@
 			children = (
 				0375A7301B4037970011BE5C /* ScreenTime.png */,
 				0396553F1B50F4F0002C83A2 /* ScreenTimePaused.png */,
+				03979F131BFA796F00C6DF09 /* ScreenTime@2x.png */,
+				03979F141BFA796F00C6DF09 /* ScreenTimePaused@2x.png */,
 				0375A7311B4037970011BE5C /* STHTTPRequest.h */,
 				0375A7321B4037970011BE5C /* STHTTPRequest.m */,
 				0375A7331B4037970011BE5C /* NSImage+SRT.h */,
@@ -235,9 +241,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				039655401B50F4F0002C83A2 /* ScreenTimePaused.png in Resources */,
+				03979F151BFA796F00C6DF09 /* ScreenTime@2x.png in Resources */,
 				0375A7181B4037730011BE5C /* Images.xcassets in Resources */,
 				0375A71B1B4037730011BE5C /* MainMenu.xib in Resources */,
 				0375A7411B4037970011BE5C /* ScreenTime.png in Resources */,
+				03979F161BFA796F00C6DF09 /* ScreenTimePaused@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
