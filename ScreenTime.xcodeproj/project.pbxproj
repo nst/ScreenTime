@@ -12,7 +12,6 @@
 		0375A71B1B4037730011BE5C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0375A7191B4037730011BE5C /* MainMenu.xib */; };
 		0375A7271B4037730011BE5C /* ScreenTimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A7261B4037730011BE5C /* ScreenTimeTests.m */; };
 		0375A7411B4037970011BE5C /* ScreenTime.png in Resources */ = {isa = PBXBuildFile; fileRef = 0375A7301B4037970011BE5C /* ScreenTime.png */; };
-		0375A7421B4037970011BE5C /* STHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A7321B4037970011BE5C /* STHTTPRequest.m */; };
 		0375A7431B4037970011BE5C /* NSImage+SRT.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A7341B4037970011BE5C /* NSImage+SRT.m */; };
 		0375A7441B4037970011BE5C /* NSDate+SRT.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A7361B4037970011BE5C /* NSDate+SRT.m */; };
 		0375A7451B4037970011BE5C /* SRTMovieMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A7381B4037970011BE5C /* SRTMovieMaker.m */; };
@@ -47,8 +46,6 @@
 		0375A7251B4037730011BE5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0375A7261B4037730011BE5C /* ScreenTimeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScreenTimeTests.m; sourceTree = "<group>"; };
 		0375A7301B4037970011BE5C /* ScreenTime.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ScreenTime.png; sourceTree = "<group>"; };
-		0375A7311B4037970011BE5C /* STHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STHTTPRequest.h; sourceTree = "<group>"; };
-		0375A7321B4037970011BE5C /* STHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STHTTPRequest.m; sourceTree = "<group>"; };
 		0375A7331B4037970011BE5C /* NSImage+SRT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+SRT.h"; sourceTree = "<group>"; };
 		0375A7341B4037970011BE5C /* NSImage+SRT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+SRT.m"; sourceTree = "<group>"; };
 		0375A7351B4037970011BE5C /* NSDate+SRT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+SRT.h"; sourceTree = "<group>"; };
@@ -111,8 +108,6 @@
 				0396553F1B50F4F0002C83A2 /* ScreenTimePaused.png */,
 				03979F131BFA796F00C6DF09 /* ScreenTime@2x.png */,
 				03979F141BFA796F00C6DF09 /* ScreenTimePaused@2x.png */,
-				0375A7311B4037970011BE5C /* STHTTPRequest.h */,
-				0375A7321B4037970011BE5C /* STHTTPRequest.m */,
 				0375A7331B4037970011BE5C /* NSImage+SRT.h */,
 				0375A7341B4037970011BE5C /* NSImage+SRT.m */,
 				0375A7351B4037970011BE5C /* NSDate+SRT.h */,
@@ -268,7 +263,6 @@
 				0375A7461B4037970011BE5C /* SRTConsolidator.m in Sources */,
 				0375A7451B4037970011BE5C /* SRTMovieMaker.m in Sources */,
 				0375A7441B4037970011BE5C /* NSDate+SRT.m in Sources */,
-				0375A7421B4037970011BE5C /* STHTTPRequest.m in Sources */,
 				0375A7491B4037970011BE5C /* SRTAppDelegate.m in Sources */,
 				0375A7161B4037730011BE5C /* main.m in Sources */,
 				0375A7471B4037970011BE5C /* SRTLoginItems.m in Sources */,

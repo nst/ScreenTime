@@ -10,31 +10,31 @@
 	<string>ScreenTime</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>FA424924E8D8AE12DE2B93BD8F4F12919EEBD0A8</key>
-		<string>/Users/nst/Dropbox/dropbox</string>
+		<key>DCF4C4FD6FEA1FE158B45BE7306491E3E22CF2B8</key>
+		<string>https://github.com/nst/ScreenTime.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ScreenTime/ScreenTime.xcodeproj</string>
+	<string>ScreenTime.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>FA424924E8D8AE12DE2B93BD8F4F12919EEBD0A8</key>
-		<string>../../..</string>
+		<key>DCF4C4FD6FEA1FE158B45BE7306491E3E22CF2B8</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>/Users/nst/Dropbox/dropbox</string>
+	<string>https://github.com/nst/ScreenTime.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>FA424924E8D8AE12DE2B93BD8F4F12919EEBD0A8</string>
+	<string>DCF4C4FD6FEA1FE158B45BE7306491E3E22CF2B8</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>FA424924E8D8AE12DE2B93BD8F4F12919EEBD0A8</string>
+			<string>DCF4C4FD6FEA1FE158B45BE7306491E3E22CF2B8</string>
 			<key>IDESourceControlWCCName</key>
-			<string>dropbox</string>
+			<string>ScreenTime</string>
 		</dict>
 	</array>
 </dict>

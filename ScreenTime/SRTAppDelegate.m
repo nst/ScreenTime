@@ -9,7 +9,6 @@
 #import "SRTAppDelegate.h"
 #import "SRTScreenShooter.h"
 #import "SRTLoginItems.h"
-#import "STHTTPRequest.h"
 
 @interface SRTAppDelegate ()
 @property (nonatomic, strong) SRTScreenShooter *screenShooter;
@@ -70,9 +69,9 @@
     [_menu setDelegate:self];
     
     /**/
-
+    
     [self startTimer];
-
+    
     /**/
     
     [self updateStartAtLaunchMenuItemState];
@@ -171,67 +170,68 @@
 
 - (void)checkForUpdates {
     
-    STHTTPRequest *r = [STHTTPRequest requestWithURLString:@"http://www.seriot.ch/screentime/screentime.json"];
+    NSURL *url = [NSURL URLWithString:@"http://www.seriot.ch/screentime/screentime.json"];
     
-    r.completionDataBlock = ^(NSDictionary *headers, NSData *data) {
-        
-        NSError *error = nil;
-        NSDictionary *d = [NSJSONSerialization JSONObjectWithData:data
-                                                          options:NSJSONReadingMutableContainers
-                                                            error:&error];
-        
-        NSString *latestVersionString = d[@"latest_version_string"];
-        NSString *latestVersionURL = d[@"latest_version_url"];
-        
-        NSLog(@"-- latestVersionString: %@", latestVersionString);
-        NSLog(@"-- latestVersionURL: %@", latestVersionURL);
-        
-        NSString *currentVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-        
-        BOOL needsUpdate = [currentVersionString compare:latestVersionString] == NSOrderedAscending;
-        
-        NSLog(@"-- needsUpdate: %d", needsUpdate);
-        if(needsUpdate == NO) return;
-        
-        NSString *messageText = [NSString stringWithFormat:@"ScreenTime %@ is Available", latestVersionString];
-        NSString *infoText = @"Please download it and replace the current version.";
-        
-        NSAlert *alert = [[NSAlert alloc] init];
-        alert.messageText = messageText;
-        alert.informativeText = infoText;
-        [alert addButtonWithTitle:@"Download"];
-        [alert addButtonWithTitle:@"Cancel"];
-        [alert setAlertStyle:NSInformationalAlertStyle];
-        
-        NSModalResponse response = [alert runModal];
-        
-        if(response == NSAlertFirstButtonReturn) {
-            NSURL *downloadURL = [NSURL URLWithString:latestVersionURL];
-            [[NSWorkspace sharedWorkspace] openURL:downloadURL];
-        }
-    };
-    
-    r.errorBlock = ^(NSError *error) {
-        NSLog(@"-- %@", [error localizedDescription]);
-    };
-    
-    [r startAsynchronous];
+    [[[NSURLSession sharedSession] dataTaskWithURL:url
+                                 completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                     
+                                     if(data == nil) {
+                                         NSLog(@"-- %@", [error localizedDescription]);
+                                         return;
+                                     }
+                                     
+                                     NSError *jsonError = nil;
+                                     NSDictionary *d = [NSJSONSerialization JSONObjectWithData:data
+                                                                                       options:NSJSONReadingMutableContainers
+                                                                                         error:&jsonError];
+                                     
+                                     NSString *latestVersionString = d[@"latest_version_string"];
+                                     NSString *latestVersionURL = d[@"latest_version_url"];
+                                     
+                                     NSLog(@"-- latestVersionString: %@", latestVersionString);
+                                     NSLog(@"-- latestVersionURL: %@", latestVersionURL);
+                                     
+                                     NSString *currentVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+                                     
+                                     BOOL needsUpdate = [currentVersionString compare:latestVersionString] == NSOrderedAscending;
+                                     
+                                     NSLog(@"-- needsUpdate: %d", needsUpdate);
+                                     if(needsUpdate == NO) return;
+                                     
+                                     NSString *messageText = [NSString stringWithFormat:@"ScreenTime %@ is Available", latestVersionString];
+                                     NSString *infoText = @"Please download it and replace the current version.";
+                                     
+                                     NSAlert *alert = [[NSAlert alloc] init];
+                                     alert.messageText = messageText;
+                                     alert.informativeText = infoText;
+                                     [alert addButtonWithTitle:@"Download"];
+                                     [alert addButtonWithTitle:@"Cancel"];
+                                     [alert setAlertStyle:NSInformationalAlertStyle];
+                                     
+                                     NSModalResponse modalResponse = [alert runModal];
+                                     
+                                     if(modalResponse == NSAlertFirstButtonReturn) {
+                                         NSURL *downloadURL = [NSURL URLWithString:latestVersionURL];
+                                         [[NSWorkspace sharedWorkspace] openURL:downloadURL];
+                                     }
+                                     
+                                 }] resume];
 }
 
 - (IBAction)togglePause:(id)sender {
     BOOL captureWasPaused = self.timer == nil;
-
+    
     if(captureWasPaused) {
         [self startTimer];
     } else {
         [self stopTimer];
     }
-
+    
     NSString *imageName = captureWasPaused ? @"ScreenTime.png" : @"ScreenTimePaused.png";
     NSImage *iconImage = [NSImage imageNamed:imageName];
     iconImage.template = YES;
     self.statusItem.image = iconImage;
-
+    
     [self updatePauseCaptureMenuItemState];
 }
 
@@ -252,7 +252,7 @@
     if(optionKeyIsPressed && commandKeyIsPressed) {
         [_screenShooter makeScreenshotsAndConsolidate];
     }
-
+    
     [self.versionMenuItem setHidden:(optionKeyIsPressed == NO)];
 }
 
