@@ -730,23 +730,23 @@
             <point key="canvasLocation" x="251.5" y="449.5"/>
         </menu>
         <customView id="vqa-u2-nz9">
-            <rect key="frame" x="0.0" y="0.0" width="161" height="88"/>
+            <rect key="frame" x="0.0" y="0.0" width="146" height="63"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
+                <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gOp-qN-wpv">
+                    <rect key="frame" x="10" y="29" width="125" height="25"/>
+                    <sliderCell key="cell" state="on" alignment="left" maxValue="4" tickMarkPosition="above" numberOfTickMarks="5" allowsTickMarkValuesOnly="YES" sliderType="linear" id="F5L-cr-DUy"/>
+                </slider>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="59v-fM-9gE">
-                    <rect key="frame" x="18" y="20" width="125" height="17"/>
+                    <rect key="frame" x="10" y="9" width="125" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="RAU-fd-A7z">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gOp-qN-wpv">
-                    <rect key="frame" x="18" y="43" width="125" height="25"/>
-                    <sliderCell key="cell" state="on" alignment="left" maxValue="4" tickMarkPosition="above" numberOfTickMarks="5" allowsTickMarkValuesOnly="YES" sliderType="linear" id="F5L-cr-DUy"/>
-                </slider>
             </subviews>
-            <point key="canvasLocation" x="373.5" y="628"/>
+            <point key="canvasLocation" x="366" y="615.5"/>
         </customView>
     </objects>
 </document>
