@@ -296,6 +296,8 @@ void writeMovieFromJpgPaths(NSString *dirPath, NSArray *jpgPaths, NSString *movi
 
 - (void)removeFilesOlderThanNumberOfDays:(NSUInteger)historyToKeepInDays {
     
+    if(historyToKeepInDays == 0) return;
+    
     NSFileManager *fm = [NSFileManager defaultManager];
 
     NSError *error = nil;

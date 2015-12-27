@@ -112,14 +112,13 @@
     
     SRTConsolidator *c = [SRTConsolidator consolidatorWithDirPath:_directoryPath];
 
-    NSUInteger historyToKeepInDays = [[NSUserDefaults standardUserDefaults] integerForKey:@"HistoryToKeepInDays"];
-    if(historyToKeepInDays > 0) {
-        [c removeFilesOlderThanNumberOfDays:historyToKeepInDays];
-    }
-
     [c consolidateHourMoviesIntoDayMovies];
     
     [c consolidateScreenshotsIntoHourMovies];
+    
+    NSUInteger maxAgeInDays = [[NSUserDefaults standardUserDefaults] integerForKey:@"HistoryToKeepInDays"];
+
+    [c removeFilesOlderThanNumberOfDays:maxAgeInDays];
 }
 
 @end

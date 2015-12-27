@@ -16,4 +16,6 @@
 
 - (void)makeScreenshotsAndConsolidate;
 
+- (void)removeFilesOlderThanNumberOfDays:(NSUInteger)maxAgeInDays;
+
 @end
