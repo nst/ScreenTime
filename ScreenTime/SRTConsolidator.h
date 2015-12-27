@@ -16,6 +16,8 @@
 
 - (void)consolidateHourMoviesIntoDayMovies;
 
+- (void)removeFilesOlderThanNumberOfDays:(NSUInteger)historyToKeepInDays;
+
 // for unit tests
 
 + (NSArray *)filterFilenames:(NSArray *)paths

@@ -128,6 +128,17 @@ void writeMovieFromJpgPaths(NSString *dirPath, NSArray *jpgPaths, NSString *movi
     return c;
 }
 
++ (NSDateFormatter *)dateFormatter {
+    
+    static NSDateFormatter *sharedDateFormatter = nil;
+    if (sharedDateFormatter == nil) {
+        sharedDateFormatter = [[NSDateFormatter alloc] init];
+        [sharedDateFormatter setDateFormat:@"yyyyMMdd"];
+    }
+    
+    return sharedDateFormatter;
+}
+
 + (NSArray *)filterFilenames:(NSArray *)paths
                directoryPath:(NSString *)dirPath
                      withExt:(NSString *)ext
@@ -259,6 +270,65 @@ void writeMovieFromJpgPaths(NSString *dirPath, NSArray *jpgPaths, NSString *movi
             NSLog(@"-- could remove screenshots: %d", couldRemoveScreenshots);
         });
     }
+}
+
++ (NSDate *)dateOfDayForFilename:(NSString *)filename {
+    if([filename length] < 8) return nil;
+    
+    NSString *s = [filename substringToIndex:8];
+    NSDate *date = [[self dateFormatter] dateFromString:s];
+    
+    return date;
+}
+
++ (NSUInteger)daysBetweenDate:(NSDate *)date1 andDate:(NSDate *)date2 {
+    
+    if([date1 compare:date2] == NSOrderedDescending) {
+        NSDate *temp = date1;
+        date1 = date2;
+        date2 = temp;
+    }
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:NSCalendarUnitDay fromDate:date1 toDate:date2 options:0];
+    return [components day];
+}
+
+- (void)removeFilesOlderThanNumberOfDays:(NSUInteger)historyToKeepInDays {
+    
+    NSFileManager *fm = [NSFileManager defaultManager];
+
+    NSError *error = nil;
+    NSArray *contents = [fm contentsOfDirectoryAtPath:_dirPath error:&error];
+    if(contents == nil) {
+        NSLog(@"-- error: %@", error);
+        return;
+    }
+
+    NSDate *now = [NSDate date];
+
+    [contents enumerateObjectsUsingBlock:^(NSString *filename, NSUInteger idx, BOOL * _Nonnull stop) {
+        if([filename hasPrefix:@"."]) return;
+        
+        NSDate *date = [[self class] dateOfDayForFilename:filename];
+        if(date == nil) {
+            NSLog(@"-- can't tell date for filename %@", filename);
+            return;
+        }
+        
+        NSUInteger fileAgeInDays = [[self class] daysBetweenDate:date andDate:now];
+        
+        if(fileAgeInDays > historyToKeepInDays) {
+            NSString *path = [_dirPath stringByAppendingPathComponent:filename];
+            NSLog(@"-- removing file with age in days: %lu, %@", fileAgeInDays, path);
+            
+            NSError *error = nil;
+            BOOL success = [fm removeItemAtPath:path error:&error];
+            if(success == NO) {
+                NSLog(@"-- error: %@", [error localizedDescription]);
+            }
+        }
+    }];
 }
 
 @end
