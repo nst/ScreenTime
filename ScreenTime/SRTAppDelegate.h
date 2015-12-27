@@ -15,6 +15,10 @@
 @property (strong, nonatomic) IBOutlet NSMenuItem *skipScreensaverMenuItem;
 @property (strong, nonatomic) IBOutlet NSMenuItem *startAtLoginMenuItem;
 @property (strong, nonatomic) IBOutlet NSMenuItem *pauseCaptureMenuItem;
+@property (strong, nonatomic) IBOutlet NSMenuItem *historyDepthMenuItem;
+@property (strong, nonatomic) IBOutlet NSView *historyDepthView;
+@property (strong, nonatomic) IBOutlet NSSlider *historyDepthSlider;
+@property (strong, nonatomic) IBOutlet NSTextField *historyDepthTextField;
 
 - (IBAction)about:(id)sender;
 - (IBAction)openFolder:(id)sender;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14D131" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -13,6 +13,10 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="SRTAppDelegate">
             <connections>
+                <outlet property="historyDepthMenuItem" destination="gOv-Ha-12s" id="abL-Ah-T8v"/>
+                <outlet property="historyDepthSlider" destination="gOp-qN-wpv" id="u4X-Nn-7Wd"/>
+                <outlet property="historyDepthTextField" destination="59v-fM-9gE" id="Kvf-AC-L3G"/>
+                <outlet property="historyDepthView" destination="vqa-u2-nz9" id="omp-Mh-Csa"/>
                 <outlet property="menu" destination="eZW-AR-iR1" id="7hE-09-ZMB"/>
                 <outlet property="pauseCaptureMenuItem" destination="InH-aV-sS6" id="CkL-gQ-mzy"/>
                 <outlet property="skipScreensaverMenuItem" destination="ZC0-LZ-q5p" id="Ahq-sS-J4f"/>
@@ -687,6 +691,16 @@
                         <action selector="openFolder:" target="Voe-Tx-rLC" id="hYr-2n-KcU"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Delete files after…" id="syp-yj-X0H">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Delete files after…" id="Sr0-r2-7PD">
+                        <items>
+                            <menuItem id="gOv-Ha-12s">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="tKo-K7-mSs"/>
                 <menuItem title="Start at Login" id="TZk-h1-yKm">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -715,5 +729,24 @@
             </items>
             <point key="canvasLocation" x="251.5" y="449.5"/>
         </menu>
+        <customView id="vqa-u2-nz9">
+            <rect key="frame" x="0.0" y="0.0" width="161" height="88"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="59v-fM-9gE">
+                    <rect key="frame" x="18" y="20" width="125" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="RAU-fd-A7z">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gOp-qN-wpv">
+                    <rect key="frame" x="18" y="43" width="125" height="25"/>
+                    <sliderCell key="cell" state="on" alignment="left" maxValue="4" tickMarkPosition="above" numberOfTickMarks="5" allowsTickMarkValuesOnly="YES" sliderType="linear" id="F5L-cr-DUy"/>
+                </slider>
+            </subviews>
+            <point key="canvasLocation" x="373.5" y="628"/>
+        </customView>
     </objects>
 </document>

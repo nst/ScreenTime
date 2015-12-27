@@ -55,7 +55,7 @@
     
     NSString *currentVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     
-    NSImage *iconImage = [NSImage imageNamed:@"ScreenTime.png"];
+    NSImage *iconImage = [NSImage imageNamed:@"ScreenTime"];
     iconImage.template = YES;
     
     self.versionMenuItem.title = [NSString stringWithFormat:@"Version %@", currentVersionString];
@@ -65,6 +65,18 @@
     _statusItem.highlightMode = YES;
     _statusItem.toolTip = [NSString stringWithFormat:@"ScreenTime %@", currentVersionString];
     _statusItem.menu = _menu;
+    
+    [_historyDepthSlider setTarget:self];
+    [_historyDepthSlider setAction:@selector(historySliderDidMove:)];
+    
+    _historyDepthSlider.allowsTickMarkValuesOnly = YES;
+    _historyDepthSlider.maxValue = 4;
+    _historyDepthSlider.numberOfTickMarks = 5;
+    
+    [self updateHistoryDepthLabelDescription];
+    [self updateHistoryDepthSliderPosition];
+
+    [self.historyDepthMenuItem setView:_historyDepthView];
     
     [_menu setDelegate:self];
     
@@ -227,7 +239,7 @@
         [self stopTimer];
     }
     
-    NSString *imageName = captureWasPaused ? @"ScreenTime.png" : @"ScreenTimePaused.png";
+    NSString *imageName = captureWasPaused ? @"ScreenTime" : @"ScreenTimePaused";
     NSImage *iconImage = [NSImage imageNamed:imageName];
     iconImage.template = YES;
     self.statusItem.image = iconImage;
@@ -237,6 +249,67 @@
 
 - (IBAction)quit:(id)sender {
     [[NSApplication sharedApplication] terminate:self];
+}
+
++ (NSInteger)sliderValueForNumberOfDays:(NSUInteger)numberOfDays {
+    if(numberOfDays == 1) return 0;
+    if(numberOfDays == 30) return 1;
+    if(numberOfDays == 90) return 2;
+    if(numberOfDays == 360) return 3;
+    if(numberOfDays == 0) return 4;
+    return 0;
+}
+
++ (NSUInteger)historyNumberOfDaysForSliderValue:(NSInteger)value {
+    if(value < 0) return 0;
+    if(value == 0) return 1;
+    if(value == 1) return 30;
+    if(value == 2) return 90;
+    if(value == 3) return 360;
+    if(value == 4) return 0;
+    return 0;
+}
+
++ (NSString *)historyPeriodDescriptionForSliderValue:(NSInteger)value {
+    NSUInteger i = [self historyNumberOfDaysForSliderValue:value];
+    
+    if(i == 0) return @"Never";
+    if(i == 1) return @"1 day";
+    
+    return [NSString stringWithFormat:@"%@ days", @(i)];
+}
+
+- (IBAction)historySliderDidMove:(NSSlider *)slider {
+    
+    NSInteger sliderValue = [slider integerValue];
+    
+    NSLog(@"** %@", @(sliderValue));
+    
+    NSString *s = [[self class] historyPeriodDescriptionForSliderValue:sliderValue];
+    
+    [_historyDepthTextField setStringValue:s];
+    
+    NSUInteger numberOfDays = [[self class] historyNumberOfDaysForSliderValue:sliderValue];
+    
+    [[NSUserDefaults standardUserDefaults] setInteger:numberOfDays forKey:@"HistoryToKeepInDays"];
+}
+
+- (void)updateHistoryDepthLabelDescription {
+
+    NSUInteger numberOfDays = [[NSUserDefaults standardUserDefaults] integerForKey:@"HistoryToKeepInDays"];
+
+    NSUInteger sliderValue = [[self class] sliderValueForNumberOfDays:numberOfDays];
+
+    NSString *s = [[self class] historyPeriodDescriptionForSliderValue:sliderValue];
+    
+    [_historyDepthTextField setStringValue:s];
+}
+
+- (void)updateHistoryDepthSliderPosition {
+
+    NSUInteger numberOfDays = [[NSUserDefaults standardUserDefaults] integerForKey:@"HistoryToKeepInDays"];
+
+    _historyDepthSlider.integerValue = [[self class] sliderValueForNumberOfDays:numberOfDays];
 }
 
 #pragma mark NSMenuDelegate
