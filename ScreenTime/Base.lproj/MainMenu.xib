@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
     </dependencies>
     <objects>
@@ -11,13 +12,14 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="Voe-Tx-rLC" customClass="SRTAppDelegate">
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="ScreenTime" customModuleProvider="target">
             <connections>
+                <outlet property="historyContentsMenuItem" destination="hck-ib-tDx" id="pli-eg-Gxa"/>
                 <outlet property="historyDepthMenuItem" destination="gOv-Ha-12s" id="abL-Ah-T8v"/>
                 <outlet property="historyDepthSlider" destination="gOp-qN-wpv" id="u4X-Nn-7Wd"/>
-                <outlet property="historyDepthTextField" destination="59v-fM-9gE" id="Kvf-AC-L3G"/>
+                <outlet property="historyDepthTextField" destination="59v-fM-9gE" id="MU2-Bm-4KS"/>
                 <outlet property="historyDepthView" destination="vqa-u2-nz9" id="omp-Mh-Csa"/>
-                <outlet property="menu" destination="eZW-AR-iR1" id="7hE-09-ZMB"/>
+                <outlet property="menu" destination="eZW-AR-iR1" id="vdi-WG-HMa"/>
                 <outlet property="pauseCaptureMenuItem" destination="InH-aV-sS6" id="CkL-gQ-mzy"/>
                 <outlet property="skipScreensaverMenuItem" destination="ZC0-LZ-q5p" id="Ahq-sS-J4f"/>
                 <outlet property="startAtLoginMenuItem" destination="TZk-h1-yKm" id="8gO-aY-evL"/>
@@ -686,14 +688,24 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="Qbl-Mx-4OU"/>
-                <menuItem title="Open Folder" keyEquivalent="r" id="fOc-8c-d5j">
+                <menuItem title="History" id="hck-ib-tDx">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="History" id="Qfd-fT-vEj">
+                        <items>
+                            <menuItem title="Item" id="eR4-lM-VfS">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Reveal History" keyEquivalent="r" id="fOc-8c-d5j">
                     <connections>
                         <action selector="openFolder:" target="Voe-Tx-rLC" id="hYr-2n-KcU"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Delete files after…" id="syp-yj-X0H">
+                <menuItem title="Delete Files After…" id="syp-yj-X0H">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Delete files after…" id="Sr0-r2-7PD">
+                    <menu key="submenu" title="Delete Files After…" id="Sr0-r2-7PD">
                         <items>
                             <menuItem id="gOv-Ha-12s">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -727,7 +739,10 @@
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="251.5" y="449.5"/>
+            <connections>
+                <outlet property="delegate" destination="Voe-Tx-rLC" id="i9T-nd-zJz"/>
+            </connections>
+            <point key="canvasLocation" x="170" y="371.5"/>
         </menu>
         <customView id="vqa-u2-nz9">
             <rect key="frame" x="0.0" y="0.0" width="146" height="63"/>
@@ -736,6 +751,9 @@
                 <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gOp-qN-wpv">
                     <rect key="frame" x="10" y="29" width="125" height="25"/>
                     <sliderCell key="cell" state="on" alignment="left" maxValue="4" tickMarkPosition="above" numberOfTickMarks="5" allowsTickMarkValuesOnly="YES" sliderType="linear" id="F5L-cr-DUy"/>
+                    <connections>
+                        <action selector="historySliderDidMove:" target="Voe-Tx-rLC" id="yzY-9I-b4L"/>
+                    </connections>
                 </slider>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="59v-fM-9gE">
                     <rect key="frame" x="10" y="9" width="125" height="17"/>

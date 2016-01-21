@@ -7,65 +7,54 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0375A7161B4037730011BE5C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A7151B4037730011BE5C /* main.m */; };
-		0375A7181B4037730011BE5C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0375A7171B4037730011BE5C /* Images.xcassets */; };
-		0375A71B1B4037730011BE5C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0375A7191B4037730011BE5C /* MainMenu.xib */; };
-		0375A7271B4037730011BE5C /* ScreenTimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A7261B4037730011BE5C /* ScreenTimeTests.m */; };
-		0375A7431B4037970011BE5C /* NSImage+SRT.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A7341B4037970011BE5C /* NSImage+SRT.m */; };
-		0375A7441B4037970011BE5C /* NSDate+SRT.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A7361B4037970011BE5C /* NSDate+SRT.m */; };
-		0375A7451B4037970011BE5C /* SRTMovieMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A7381B4037970011BE5C /* SRTMovieMaker.m */; };
-		0375A7461B4037970011BE5C /* SRTConsolidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A73A1B4037970011BE5C /* SRTConsolidator.m */; };
-		0375A7471B4037970011BE5C /* SRTLoginItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A73C1B4037970011BE5C /* SRTLoginItems.m */; };
-		0375A7481B4037970011BE5C /* SRTScreenShooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A73E1B4037970011BE5C /* SRTScreenShooter.m */; };
-		0375A7491B4037970011BE5C /* SRTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A7401B4037970011BE5C /* SRTAppDelegate.m */; };
-		0375A74A1B4037C90011BE5C /* SRTMovieMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A7381B4037970011BE5C /* SRTMovieMaker.m */; };
-		0375A74B1B4037C90011BE5C /* SRTConsolidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0375A73A1B4037970011BE5C /* SRTConsolidator.m */; };
+		033688EA1C410FE300FE23CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033688E91C410FE300FE23CB /* AppDelegate.swift */; };
+		033688EC1C410FE300FE23CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 033688EB1C410FE300FE23CB /* Assets.xcassets */; };
+		033688EF1C410FE300FE23CB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 033688ED1C410FE300FE23CB /* MainMenu.xib */; };
+		033688FA1C410FE300FE23CB /* ScreenTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033688F91C410FE300FE23CB /* ScreenTimeTests.swift */; };
+		033689071C42A3E500FE23CB /* ScreenShooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033689061C42A3E500FE23CB /* ScreenShooter.swift */; };
+		033689091C42A56500FE23CB /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033689081C42A56500FE23CB /* NSDateExtension.swift */; };
+		0336890B1C42F74500FE23CB /* NSImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0336890A1C42F74500FE23CB /* NSImageExtension.swift */; };
+		0336890D1C43100F00FE23CB /* Consolidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0336890C1C43100F00FE23CB /* Consolidator.swift */; };
+		0336890F1C431AAB00FE23CB /* MovieMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0336890E1C431AAB00FE23CB /* MovieMaker.swift */; };
+		033689111C49A52700FE23CB /* LaunchServicesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033689101C49A52700FE23CB /* LaunchServicesHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0375A7211B4037730011BE5C /* PBXContainerItemProxy */ = {
+		033688F61C410FE300FE23CB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 0375A7051B4037720011BE5C /* Project object */;
+			containerPortal = 033688DE1C410FE300FE23CB /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 0375A70C1B4037730011BE5C;
+			remoteGlobalIDString = 033688E51C410FE300FE23CB;
 			remoteInfo = ScreenTime;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0375A70D1B4037730011BE5C /* ScreenTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0375A7111B4037730011BE5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0375A7151B4037730011BE5C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		0375A7171B4037730011BE5C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		0375A71A1B4037730011BE5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		0375A7201B4037730011BE5C /* ScreenTimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScreenTimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0375A7251B4037730011BE5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0375A7261B4037730011BE5C /* ScreenTimeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScreenTimeTests.m; sourceTree = "<group>"; };
-		0375A7331B4037970011BE5C /* NSImage+SRT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+SRT.h"; sourceTree = "<group>"; };
-		0375A7341B4037970011BE5C /* NSImage+SRT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+SRT.m"; sourceTree = "<group>"; };
-		0375A7351B4037970011BE5C /* NSDate+SRT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+SRT.h"; sourceTree = "<group>"; };
-		0375A7361B4037970011BE5C /* NSDate+SRT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+SRT.m"; sourceTree = "<group>"; };
-		0375A7371B4037970011BE5C /* SRTMovieMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRTMovieMaker.h; sourceTree = "<group>"; };
-		0375A7381B4037970011BE5C /* SRTMovieMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRTMovieMaker.m; sourceTree = "<group>"; };
-		0375A7391B4037970011BE5C /* SRTConsolidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRTConsolidator.h; sourceTree = "<group>"; };
-		0375A73A1B4037970011BE5C /* SRTConsolidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRTConsolidator.m; sourceTree = "<group>"; };
-		0375A73B1B4037970011BE5C /* SRTLoginItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRTLoginItems.h; sourceTree = "<group>"; };
-		0375A73C1B4037970011BE5C /* SRTLoginItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRTLoginItems.m; sourceTree = "<group>"; };
-		0375A73D1B4037970011BE5C /* SRTScreenShooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRTScreenShooter.h; sourceTree = "<group>"; };
-		0375A73E1B4037970011BE5C /* SRTScreenShooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRTScreenShooter.m; sourceTree = "<group>"; };
-		0375A73F1B4037970011BE5C /* SRTAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRTAppDelegate.h; sourceTree = "<group>"; };
-		0375A7401B4037970011BE5C /* SRTAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRTAppDelegate.m; sourceTree = "<group>"; };
+		033688E61C410FE300FE23CB /* ScreenTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		033688E91C410FE300FE23CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		033688EB1C410FE300FE23CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		033688EE1C410FE300FE23CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		033688F01C410FE300FE23CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		033688F51C410FE300FE23CB /* ScreenTimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScreenTimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		033688F91C410FE300FE23CB /* ScreenTimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeTests.swift; sourceTree = "<group>"; };
+		033688FB1C410FE300FE23CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		033689061C42A3E500FE23CB /* ScreenShooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenShooter.swift; sourceTree = "<group>"; };
+		033689081C42A56500FE23CB /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
+		0336890A1C42F74500FE23CB /* NSImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSImageExtension.swift; sourceTree = "<group>"; };
+		0336890C1C43100F00FE23CB /* Consolidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Consolidator.swift; sourceTree = "<group>"; };
+		0336890E1C431AAB00FE23CB /* MovieMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieMaker.swift; sourceTree = "<group>"; };
+		033689101C49A52700FE23CB /* LaunchServicesHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchServicesHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		0375A70A1B4037730011BE5C /* Frameworks */ = {
+		033688E31C410FE300FE23CB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0375A71D1B4037730011BE5C /* Frameworks */ = {
+		033688F21C410FE300FE23CB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -75,84 +64,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0375A7041B4037720011BE5C = {
+		033688DD1C410FE300FE23CB = {
 			isa = PBXGroup;
 			children = (
-				0375A70F1B4037730011BE5C /* ScreenTime */,
-				0375A7231B4037730011BE5C /* ScreenTimeTests */,
-				0375A70E1B4037730011BE5C /* Products */,
+				033688E81C410FE300FE23CB /* ScreenTime */,
+				033688F81C410FE300FE23CB /* ScreenTimeTests */,
+				033688E71C410FE300FE23CB /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		0375A70E1B4037730011BE5C /* Products */ = {
+		033688E71C410FE300FE23CB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0375A70D1B4037730011BE5C /* ScreenTime.app */,
-				0375A7201B4037730011BE5C /* ScreenTimeTests.xctest */,
+				033688E61C410FE300FE23CB /* ScreenTime.app */,
+				033688F51C410FE300FE23CB /* ScreenTimeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0375A70F1B4037730011BE5C /* ScreenTime */ = {
+		033688E81C410FE300FE23CB /* ScreenTime */ = {
 			isa = PBXGroup;
 			children = (
-				0375A7331B4037970011BE5C /* NSImage+SRT.h */,
-				0375A7341B4037970011BE5C /* NSImage+SRT.m */,
-				0375A7351B4037970011BE5C /* NSDate+SRT.h */,
-				0375A7361B4037970011BE5C /* NSDate+SRT.m */,
-				0375A7371B4037970011BE5C /* SRTMovieMaker.h */,
-				0375A7381B4037970011BE5C /* SRTMovieMaker.m */,
-				0375A7391B4037970011BE5C /* SRTConsolidator.h */,
-				0375A73A1B4037970011BE5C /* SRTConsolidator.m */,
-				0375A73B1B4037970011BE5C /* SRTLoginItems.h */,
-				0375A73C1B4037970011BE5C /* SRTLoginItems.m */,
-				0375A73D1B4037970011BE5C /* SRTScreenShooter.h */,
-				0375A73E1B4037970011BE5C /* SRTScreenShooter.m */,
-				0375A73F1B4037970011BE5C /* SRTAppDelegate.h */,
-				0375A7401B4037970011BE5C /* SRTAppDelegate.m */,
-				0375A7171B4037730011BE5C /* Images.xcassets */,
-				0375A7191B4037730011BE5C /* MainMenu.xib */,
-				0375A7101B4037730011BE5C /* Supporting Files */,
+				0336890A1C42F74500FE23CB /* NSImageExtension.swift */,
+				033689081C42A56500FE23CB /* NSDateExtension.swift */,
+				0336890E1C431AAB00FE23CB /* MovieMaker.swift */,
+				0336890C1C43100F00FE23CB /* Consolidator.swift */,
+				033689101C49A52700FE23CB /* LaunchServicesHelper.swift */,
+				033689061C42A3E500FE23CB /* ScreenShooter.swift */,
+				033688E91C410FE300FE23CB /* AppDelegate.swift */,
+				033688EB1C410FE300FE23CB /* Assets.xcassets */,
+				033688ED1C410FE300FE23CB /* MainMenu.xib */,
+				033688F01C410FE300FE23CB /* Info.plist */,
 			);
 			path = ScreenTime;
 			sourceTree = "<group>";
 		};
-		0375A7101B4037730011BE5C /* Supporting Files */ = {
+		033688F81C410FE300FE23CB /* ScreenTimeTests */ = {
 			isa = PBXGroup;
 			children = (
-				0375A7111B4037730011BE5C /* Info.plist */,
-				0375A7151B4037730011BE5C /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		0375A7231B4037730011BE5C /* ScreenTimeTests */ = {
-			isa = PBXGroup;
-			children = (
-				0375A7261B4037730011BE5C /* ScreenTimeTests.m */,
-				0375A7241B4037730011BE5C /* Supporting Files */,
+				033688F91C410FE300FE23CB /* ScreenTimeTests.swift */,
+				033688FB1C410FE300FE23CB /* Info.plist */,
 			);
 			path = ScreenTimeTests;
-			sourceTree = "<group>";
-		};
-		0375A7241B4037730011BE5C /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				0375A7251B4037730011BE5C /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0375A70C1B4037730011BE5C /* ScreenTime */ = {
+		033688E51C410FE300FE23CB /* ScreenTime */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0375A72A1B4037730011BE5C /* Build configuration list for PBXNativeTarget "ScreenTime" */;
+			buildConfigurationList = 033688FE1C410FE300FE23CB /* Build configuration list for PBXNativeTarget "ScreenTime" */;
 			buildPhases = (
-				0375A7091B4037730011BE5C /* Sources */,
-				0375A70A1B4037730011BE5C /* Frameworks */,
-				0375A70B1B4037730011BE5C /* Resources */,
+				033688E21C410FE300FE23CB /* Sources */,
+				033688E31C410FE300FE23CB /* Frameworks */,
+				033688E41C410FE300FE23CB /* Resources */,
 			);
 			buildRules = (
 			);
@@ -160,46 +125,47 @@
 			);
 			name = ScreenTime;
 			productName = ScreenTime;
-			productReference = 0375A70D1B4037730011BE5C /* ScreenTime.app */;
+			productReference = 033688E61C410FE300FE23CB /* ScreenTime.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0375A71F1B4037730011BE5C /* ScreenTimeTests */ = {
+		033688F41C410FE300FE23CB /* ScreenTimeTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0375A72D1B4037730011BE5C /* Build configuration list for PBXNativeTarget "ScreenTimeTests" */;
+			buildConfigurationList = 033689011C410FE300FE23CB /* Build configuration list for PBXNativeTarget "ScreenTimeTests" */;
 			buildPhases = (
-				0375A71C1B4037730011BE5C /* Sources */,
-				0375A71D1B4037730011BE5C /* Frameworks */,
-				0375A71E1B4037730011BE5C /* Resources */,
+				033688F11C410FE300FE23CB /* Sources */,
+				033688F21C410FE300FE23CB /* Frameworks */,
+				033688F31C410FE300FE23CB /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				0375A7221B4037730011BE5C /* PBXTargetDependency */,
+				033688F71C410FE300FE23CB /* PBXTargetDependency */,
 			);
 			name = ScreenTimeTests;
 			productName = ScreenTimeTests;
-			productReference = 0375A7201B4037730011BE5C /* ScreenTimeTests.xctest */;
+			productReference = 033688F51C410FE300FE23CB /* ScreenTimeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		0375A7051B4037720011BE5C /* Project object */ = {
+		033688DE1C410FE300FE23CB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Nicolas Seriot";
 				TargetAttributes = {
-					0375A70C1B4037730011BE5C = {
-						CreatedOnToolsVersion = 6.3.2;
+					033688E51C410FE300FE23CB = {
+						CreatedOnToolsVersion = 7.2;
 					};
-					0375A71F1B4037730011BE5C = {
-						CreatedOnToolsVersion = 6.3.2;
-						TestTargetID = 0375A70C1B4037730011BE5C;
+					033688F41C410FE300FE23CB = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 033688E51C410FE300FE23CB;
 					};
 				};
 			};
-			buildConfigurationList = 0375A7081B4037720011BE5C /* Build configuration list for PBXProject "ScreenTime" */;
+			buildConfigurationList = 033688E11C410FE300FE23CB /* Build configuration list for PBXProject "ScreenTime" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -207,28 +173,28 @@
 				en,
 				Base,
 			);
-			mainGroup = 0375A7041B4037720011BE5C;
-			productRefGroup = 0375A70E1B4037730011BE5C /* Products */;
+			mainGroup = 033688DD1C410FE300FE23CB;
+			productRefGroup = 033688E71C410FE300FE23CB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0375A70C1B4037730011BE5C /* ScreenTime */,
-				0375A71F1B4037730011BE5C /* ScreenTimeTests */,
+				033688E51C410FE300FE23CB /* ScreenTime */,
+				033688F41C410FE300FE23CB /* ScreenTimeTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		0375A70B1B4037730011BE5C /* Resources */ = {
+		033688E41C410FE300FE23CB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0375A7181B4037730011BE5C /* Images.xcassets in Resources */,
-				0375A71B1B4037730011BE5C /* MainMenu.xib in Resources */,
+				033688EC1C410FE300FE23CB /* Assets.xcassets in Resources */,
+				033688EF1C410FE300FE23CB /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0375A71E1B4037730011BE5C /* Resources */ = {
+		033688F31C410FE300FE23CB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -238,46 +204,43 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		0375A7091B4037730011BE5C /* Sources */ = {
+		033688E21C410FE300FE23CB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0375A7431B4037970011BE5C /* NSImage+SRT.m in Sources */,
-				0375A7481B4037970011BE5C /* SRTScreenShooter.m in Sources */,
-				0375A7461B4037970011BE5C /* SRTConsolidator.m in Sources */,
-				0375A7451B4037970011BE5C /* SRTMovieMaker.m in Sources */,
-				0375A7441B4037970011BE5C /* NSDate+SRT.m in Sources */,
-				0375A7491B4037970011BE5C /* SRTAppDelegate.m in Sources */,
-				0375A7161B4037730011BE5C /* main.m in Sources */,
-				0375A7471B4037970011BE5C /* SRTLoginItems.m in Sources */,
+				033689091C42A56500FE23CB /* NSDateExtension.swift in Sources */,
+				033688EA1C410FE300FE23CB /* AppDelegate.swift in Sources */,
+				0336890D1C43100F00FE23CB /* Consolidator.swift in Sources */,
+				033689111C49A52700FE23CB /* LaunchServicesHelper.swift in Sources */,
+				0336890F1C431AAB00FE23CB /* MovieMaker.swift in Sources */,
+				0336890B1C42F74500FE23CB /* NSImageExtension.swift in Sources */,
+				033689071C42A3E500FE23CB /* ScreenShooter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0375A71C1B4037730011BE5C /* Sources */ = {
+		033688F11C410FE300FE23CB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0375A7271B4037730011BE5C /* ScreenTimeTests.m in Sources */,
-				0375A74A1B4037C90011BE5C /* SRTMovieMaker.m in Sources */,
-				0375A74B1B4037C90011BE5C /* SRTConsolidator.m in Sources */,
+				033688FA1C410FE300FE23CB /* ScreenTimeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0375A7221B4037730011BE5C /* PBXTargetDependency */ = {
+		033688F71C410FE300FE23CB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0375A70C1B4037730011BE5C /* ScreenTime */;
-			targetProxy = 0375A7211B4037730011BE5C /* PBXContainerItemProxy */;
+			target = 033688E51C410FE300FE23CB /* ScreenTime */;
+			targetProxy = 033688F61C410FE300FE23CB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		0375A7191B4037730011BE5C /* MainMenu.xib */ = {
+		033688ED1C410FE300FE23CB /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				0375A71A1B4037730011BE5C /* Base */,
+				033688EE1C410FE300FE23CB /* Base */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -285,7 +248,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		0375A7281B4037730011BE5C /* Debug */ = {
+		033688FC1C410FE300FE23CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -306,6 +269,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -314,21 +278,21 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		0375A7291B4037730011BE5C /* Release */ = {
+		033688FD1C410FE300FE23CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -358,65 +322,57 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
 			name = Release;
 		};
-		0375A72B1B4037730011BE5C /* Debug */ = {
+		033688FF1C410FE300FE23CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = ScreenTime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ch.seriot.ScreenTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		0375A72C1B4037730011BE5C /* Release */ = {
+		033689001C410FE300FE23CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = ScreenTime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ch.seriot.ScreenTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
-		0375A72E1B4037730011BE5C /* Debug */ = {
+		033689021C410FE300FE23CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = ScreenTimeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ch.seriot.ScreenTimeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScreenTime.app/Contents/MacOS/ScreenTime";
 			};
 			name = Debug;
 		};
-		0375A72F1B4037730011BE5C /* Release */ = {
+		033689031C410FE300FE23CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = ScreenTimeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ch.seriot.ScreenTimeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScreenTime.app/Contents/MacOS/ScreenTime";
 			};
@@ -425,34 +381,32 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0375A7081B4037720011BE5C /* Build configuration list for PBXProject "ScreenTime" */ = {
+		033688E11C410FE300FE23CB /* Build configuration list for PBXProject "ScreenTime" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0375A7281B4037730011BE5C /* Debug */,
-				0375A7291B4037730011BE5C /* Release */,
+				033688FC1C410FE300FE23CB /* Debug */,
+				033688FD1C410FE300FE23CB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0375A72A1B4037730011BE5C /* Build configuration list for PBXNativeTarget "ScreenTime" */ = {
+		033688FE1C410FE300FE23CB /* Build configuration list for PBXNativeTarget "ScreenTime" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0375A72B1B4037730011BE5C /* Debug */,
-				0375A72C1B4037730011BE5C /* Release */,
+				033688FF1C410FE300FE23CB /* Debug */,
+				033689001C410FE300FE23CB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
-		0375A72D1B4037730011BE5C /* Build configuration list for PBXNativeTarget "ScreenTimeTests" */ = {
+		033689011C410FE300FE23CB /* Build configuration list for PBXNativeTarget "ScreenTimeTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0375A72E1B4037730011BE5C /* Debug */,
-				0375A72F1B4037730011BE5C /* Release */,
+				033689021C410FE300FE23CB /* Debug */,
+				033689031C410FE300FE23CB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 0375A7051B4037720011BE5C /* Project object */;
+	rootObject = 033688DE1C410FE300FE23CB /* Project object */;
 }
