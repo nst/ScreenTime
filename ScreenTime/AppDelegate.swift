@@ -156,7 +156,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             
             if modalResponse == NSAlertFirstButtonReturn {
                 NSApplication.sharedApplication().terminate(self)
-                return
             }
             
             return
@@ -271,12 +270,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 
                 guard let data = optionalData,
                     optionalDict = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? [String:AnyObject],
-                    d = optionalDict else {
+                    d = optionalDict,
+                    latestVersionString = d["latest_version_string"] as? String,
+                    latestVersionURL = d["latest_version_url"] as? String
+                else {
                     return
                 }
-                
-                guard let latestVersionString = d["latest_version_string"] as? String else { return }
-                guard let latestVersionURL = d["latest_version_url"] as? String else { return }
                 
                 print("-- latestVersionString: \(latestVersionString)")
                 print("-- latestVersionURL: \(latestVersionURL)")
@@ -366,14 +365,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         // build history contents according to file system's contents
         
-        let subMenu = self.historyContentsMenuItem.submenu
-        subMenu?.removeAllItems()
+        guard let subMenu = self.historyContentsMenuItem.submenu else { return }
+        subMenu.removeAllItems()
         
         let namesAndPaths = Consolidator.movies(dirPath)
         
         for (n,p) in namesAndPaths {
-            let historyItem = subMenu?.addItemWithTitle(n, action: "historyItemAction:", keyEquivalent: "")
-            historyItem?.representedObject = p
+            if let historyItem = subMenu.addItemWithTitle(n, action: "historyItemAction:", keyEquivalent: "") {
+                historyItem.representedObject = p
+            }
         }
     }
     
