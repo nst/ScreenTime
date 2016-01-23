@@ -154,7 +154,7 @@ public class MovieMaker {
             })
     }
     
-    public func appendImageFromDrawing(drawingBlock:(context:CGContextRef) -> ()) -> Bool {
+    public func appendImageFromDrawing(@noescape drawingBlock:(context:CGContextRef) -> ()) -> Bool {
         
         guard let pixelBufferRef = self.createPixelBufferFromDrawing(drawingBlock) else {
             return false
@@ -224,7 +224,7 @@ public class MovieMaker {
         return pixelBuffer
     }
     
-    private func createPixelBufferFromDrawing(contextDrawingBlock:(context:CGContextRef) -> ()) -> CVPixelBufferRef? {
+    private func createPixelBufferFromDrawing(@noescape contextDrawingBlock:(context:CGContextRef) -> ()) -> CVPixelBufferRef? {
         
         guard let pixelBufferRef = self.createPixelBuffer() else { return nil }
         
