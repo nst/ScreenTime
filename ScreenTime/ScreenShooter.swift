@@ -68,7 +68,8 @@ class ScreenShooter {
         return false
     }
     
-    func makeScreenshotsAndConsolidate() {
+    @objc
+    func makeScreenshotsAndConsolidate(timer:NSTimer?) {
         if NSUserDefaults.standardUserDefaults().boolForKey("SkipScreensaver") && self.isRunningScreensaver() {
             return
         }

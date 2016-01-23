@@ -12,7 +12,7 @@
 import AVFoundation
 
 public class MovieMaker {
-    
+        
     private var height : Int
     private var width : Int
     private var framesPerSecond : UInt?

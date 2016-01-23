@@ -163,14 +163,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         
         self.screenShooter = existingScreenShooter
-        screenShooter.makeScreenshotsAndConsolidate()
+        screenShooter.makeScreenshotsAndConsolidate(nil)
         
         let timeInterval = NSUserDefaults.standardUserDefaults().integerForKey("SecondsBetweenScreenshots")
         
-        self.timer = NSTimer(
-            timeInterval: Double(timeInterval),
+        self.timer.invalidate()
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(
+            NSTimeInterval(timeInterval),
             target: screenShooter,
-            selector: "makeScreenshotsAndConsolidate",
+            selector: "makeScreenshotsAndConsolidate:",
             userInfo: nil,
             repeats: true)
         timer.tolerance = 10
@@ -268,19 +269,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             
             dispatch_async(dispatch_get_main_queue(),{
                 
-                guard let data = optionalData else {
-                    return
-                }
-                
-                let d : [String:AnyObject]
-                
-                do {
-                    guard let temp = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? [String:AnyObject] else {
-                        return
-                    }
-                    d = temp
-                } catch {
-                    print(error)
+                guard let data = optionalData,
+                    optionalDict = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? [String:AnyObject],
+                    d = optionalDict else {
                     return
                 }
                 
@@ -368,7 +359,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             let optionKeyIsPressed = (modifierFlags.rawValue & NSEventModifierFlags.AlternateKeyMask.rawValue) == NSEventModifierFlags.AlternateKeyMask.rawValue
             let commandKeyIsPressed = (modifierFlags.rawValue & NSEventModifierFlags.CommandKeyMask.rawValue) == NSEventModifierFlags.CommandKeyMask.rawValue
             if(optionKeyIsPressed && commandKeyIsPressed) {
-                screenShooter.makeScreenshotsAndConsolidate()
+                screenShooter.makeScreenshotsAndConsolidate(nil)
             }
             self.versionMenuItem.hidden = optionKeyIsPressed == false;
         }

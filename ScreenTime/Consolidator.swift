@@ -288,9 +288,7 @@ class Consolidator {
     
     class func dateOfDayForFilename(filename:String) -> NSDate? {
         
-        guard filename.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) >= 8 else {
-            return nil
-        }
+        guard filename.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) >= 8 else { return nil }
         
         let s = (filename as NSString).substringToIndex(8)
         
@@ -318,18 +316,19 @@ class Consolidator {
         let now = NSDate()
         
         for filename in contents {
-            if let date = Consolidator.dateOfDayForFilename(filename) {
-                let fileAgeInDays = Consolidator.daysBetweenDates(date, date2: now)
+            
+            guard let date = Consolidator.dateOfDayForFilename(filename) else { continue }
+            
+            let fileAgeInDays = Consolidator.daysBetweenDates(date, date2: now)
+            
+            if fileAgeInDays > historyToKeepInDays {
+                let path = (dirPath as NSString).stringByAppendingPathComponent(filename)
+                print("-- removing file with age in days: \(fileAgeInDays), \(path)")
                 
-                if fileAgeInDays > historyToKeepInDays {
-                    let path = (dirPath as NSString).stringByAppendingPathComponent(filename)
-                    print("-- removing file with age in days: \(fileAgeInDays), \(path)")
-                    
-                    do {
-                        try fm.removeItemAtPath(path)
-                    } catch {
-                        print("-- cannot remove \(path), \(error)")
-                    }
+                do {
+                    try fm.removeItemAtPath(path)
+                } catch {
+                    print("-- cannot remove \(path), \(error)")
                 }
             }
             
