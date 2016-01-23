@@ -132,15 +132,14 @@ class Consolidator {
     class func filterFilename(
         paths:[String],
         dirPath:String,
-        withExt:String,
+        withExt ext:String,
         timestampLength:Int,
         beforeString:String,
         groupedByPrefixOfLength groupPrefixLength:Int) -> [[String]] {
             
             let filteredPaths = paths.filter {
                 let p = ($0 as NSString)
-                let ext = ($0 as NSString)
-                if p.pathExtension.lowercaseString == ext.lowercaseString { return false }
+                if p.pathExtension.lowercaseString != ext.lowercaseString { return false }
                 let filename = (p.lastPathComponent as NSString).stringByDeletingPathExtension
                 let components = filename.componentsSeparatedByString("_")
                 if components.count != 2 { return false }
@@ -155,10 +154,14 @@ class Consolidator {
             
             for path in filteredPaths {
                 
-                let prefix = ((path as NSString).lastPathComponent as NSString).substringToIndex(groupPrefixLength) // timestamp
-                let optSuffix = ((path as NSString).lastPathComponent as NSString).stringByDeletingPathExtension.componentsSeparatedByString("_").last
-                
-                guard let suffix = optSuffix else { continue }
+                let lastPathComponent = ((path as NSString).lastPathComponent as NSString)
+                let prefix = lastPathComponent.substringToIndex(groupPrefixLength) // timestamp
+                let components = lastPathComponent.stringByDeletingPathExtension.componentsSeparatedByString("_")
+                guard components.count == 2 else {
+                    print("-- unexpected lastPathComponent: \(lastPathComponent)")
+                    continue
+                }
+                let suffix = components[1]
                 
                 let key = "\(prefix)_\(suffix)"
                 
@@ -201,7 +204,7 @@ class Consolidator {
             
             let timestampAndDisplayID = ((hourMovies.first! as NSString).lastPathComponent as NSString).stringByDeletingPathExtension.componentsSeparatedByString("_")
             
-            if timestampAndDisplayID.count != 2 {
+            guard timestampAndDisplayID.count == 2 else {
                 print("-- unexpected path: \(timestampAndDisplayID)")
                 continue
             }
