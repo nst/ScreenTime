@@ -298,7 +298,10 @@ class Consolidator {
         return self.dateFormatter.dateFromString(s)
     }
     
-    class func daysBetweenDates(var date1:NSDate, var date2:NSDate) -> Int {
+    class func daysBetweenDates(date1 d1:NSDate, date2 d2:NSDate) -> Int {
+        
+        var (date1, date2) = (d1, d2)
+        
         if date1.compare(date2) == .OrderedDescending {
             (date1, date2) = (date2, date1)
         }
@@ -322,7 +325,7 @@ class Consolidator {
             
             guard let date = Consolidator.dateOfDayForFilename(filename) else { continue }
             
-            let fileAgeInDays = Consolidator.daysBetweenDates(date, date2: now)
+            let fileAgeInDays = Consolidator.daysBetweenDates(date1: date, date2: now)
             
             if fileAgeInDays > historyToKeepInDays {
                 let path = (dirPath as NSString).stringByAppendingPathComponent(filename)

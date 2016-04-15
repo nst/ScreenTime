@@ -88,7 +88,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         self.versionMenuItem.title = "Version \(currentVersionString)"
         
         self.historyDepthSlider.target = self
-        self.historyDepthSlider.action = "historySliderDidMove:"
+        self.historyDepthSlider.action = #selector(AppDelegate.historySliderDidMove(_:))
         
         self.historyDepthSlider.allowsTickMarkValuesOnly = true
         self.historyDepthSlider.maxValue = Double(self.dynamicType.historyDays.count - 1)
@@ -170,7 +170,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         self.timer = NSTimer.scheduledTimerWithTimeInterval(
             NSTimeInterval(timeInterval),
             target: screenShooter,
-            selector: "makeScreenshotsAndConsolidate:",
+            selector: #selector(ScreenShooter.makeScreenshotsAndConsolidate(_:)),
             userInfo: nil,
             repeats: true)
         timer.tolerance = 10
@@ -371,7 +371,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let namesAndPaths = Consolidator.movies(dirPath)
         
         for (n,p) in namesAndPaths {
-            if let historyItem = subMenu.addItemWithTitle(n, action: "historyItemAction:", keyEquivalent: "") {
+            if let historyItem = subMenu.addItemWithTitle(n, action: #selector(AppDelegate.historyItemAction(_:)), keyEquivalent: "") {
                 historyItem.representedObject = p
             }
         }
