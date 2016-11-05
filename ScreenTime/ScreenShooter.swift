@@ -14,13 +14,13 @@ class ScreenShooter {
     
     init?(path:String) {
         
-        let fm = NSFileManager.defaultManager()
+        let fm = FileManager.default
         
         var isDir : ObjCBool = false
-        let fileExists = fm.fileExistsAtPath(path, isDirectory: &isDir)
-        if fileExists == false || Bool(isDir) == false {
+        let fileExists = fm.fileExists(atPath: path, isDirectory: &isDir)
+        if fileExists == false || isDir.boolValue == false {
             do {
-                try fm.createDirectoryAtPath(path, withIntermediateDirectories: true, attributes: nil)
+                try fm.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
                 print("-- created", path);
             } catch {
                 print("-- error, cannot create", path, error)
@@ -32,17 +32,17 @@ class ScreenShooter {
         self.directoryPath = path;
     }
     
-    func takeScreenshot(displayID:CGDirectDisplayID) -> NSImage? {
+    func takeScreenshot(_ displayID:CGDirectDisplayID) -> NSImage? {
         guard let imageRef = CGDisplayCreateImage(displayID) else { return nil }
-        return NSImage(CGImage: imageRef, size: NSZeroSize)
+        return NSImage(cgImage: imageRef, size: NSZeroSize)
     }
     
-    func writeScreenshot(image:NSImage, displayIDForFilename:String) -> Bool {
+    func writeScreenshot(_ image:NSImage, displayIDForFilename:String) -> Bool {
         
-        let timestamp = NSDate().srt_timestamp()
-        let filename = timestamp.stringByAppendingString("_\(displayIDForFilename).jpg")
+        let timestamp = Date().srt_timestamp()
+        let filename = timestamp + "_\(displayIDForFilename).jpg"
         
-        let path = (directoryPath as NSString).stringByAppendingPathComponent(filename)
+        let path = (directoryPath as NSString).appendingPathComponent(filename)
         
         let success = image.srt_writeAsJpeg(path)
         
@@ -56,7 +56,7 @@ class ScreenShooter {
     }
     
     func isRunningScreensaver() -> Bool {
-        let runningApplications = NSWorkspace.sharedWorkspace().runningApplications
+        let runningApplications = NSWorkspace.shared().runningApplications
         
         for app in runningApplications {
             if let bundlerIdentifier = app.bundleIdentifier {
@@ -69,12 +69,12 @@ class ScreenShooter {
     }
     
     @objc
-    func makeScreenshotsAndConsolidate(timer:NSTimer?) {
-        if NSUserDefaults.standardUserDefaults().boolForKey("SkipScreensaver") && self.isRunningScreensaver() {
+    func makeScreenshotsAndConsolidate(_ timer:Timer?) {
+        if UserDefaults.standard.bool(forKey: "SkipScreensaver") && self.isRunningScreensaver() {
             return
         }
         
-        if NSUserDefaults.standardUserDefaults().boolForKey("PauseCapture") {
+        if UserDefaults.standard.bool(forKey: "PauseCapture") {
             print("-- capture pause prevented screenshot");
             return
         }
@@ -83,16 +83,16 @@ class ScreenShooter {
         
         var displayCount: UInt32 = 0;
         let result = CGGetActiveDisplayList(0, nil, &displayCount)
-        if result != .Success {
+        if result != .success {
             print("-- can't get active display list, error: \(result)")
             return
         }
         
         let allocated = Int(displayCount)
-        let activeDisplays = UnsafeMutablePointer<CGDirectDisplayID>.alloc(allocated)
+        let activeDisplays = UnsafeMutablePointer<CGDirectDisplayID>.allocate(capacity: allocated)
         
         let status : CGError = CGGetActiveDisplayList(MAX_DISPLAYS, activeDisplays, &displayCount)
-        if status != .Success {
+        if status != .success {
             print("-- cannot get active display list, error \(status)")
         }
         
@@ -101,7 +101,7 @@ class ScreenShooter {
             let image = self.takeScreenshot(displayID)
             if let existingImage = image {
                 let displayIDForFilename = "\(displayID)"
-                self.writeScreenshot(existingImage, displayIDForFilename:displayIDForFilename)
+                _ = self.writeScreenshot(existingImage, displayIDForFilename:displayIDForFilename)
             }
         }
         
@@ -112,7 +112,7 @@ class ScreenShooter {
             
             try c.consolidateScreenshotsIntoHourMovies()
             
-            let maxAgeInDays = NSUserDefaults.standardUserDefaults().integerForKey("HistoryToKeepInDays")
+            let maxAgeInDays = UserDefaults.standard.integer(forKey: "HistoryToKeepInDays")
             
             try c.removeFilesOlderThanNumberOfDays(maxAgeInDays)
         } catch {

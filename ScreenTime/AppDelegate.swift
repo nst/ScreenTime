@@ -7,6 +7,17 @@
 //
 
 import Cocoa
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
@@ -26,21 +37,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     var dirPath : String
     var statusItem : NSStatusItem
-    var timer: NSTimer
+    var timer: Timer
     var screenShooter : ScreenShooter
     
     static var historyDays = [1,7,30,90,360, 0] // zero for never
     
     override init() {
-        self.dirPath = ("~/Library/ScreenTime" as NSString).stringByExpandingTildeInPath
+        self.dirPath = ("~/Library/ScreenTime" as NSString).expandingTildeInPath
         
         //
         
-        self.statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(NSVariableStatusItemLength)
+        self.statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
         
         //
         
-        self.timer = NSTimer() // this instance won't be used
+        self.timer = Timer() // this instance won't be used
         
         self.screenShooter = ScreenShooter(path:dirPath)!
         
@@ -54,31 +65,31 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             let alert = NSAlert()
             alert.messageText = "ScreenTime cannot run"
             alert.informativeText = "Please create the ~/Library/ScreenTime/ directory";
-            alert.addButtonWithTitle("OK")
-            alert.alertStyle = .CriticalAlertStyle
+            alert.addButton(withTitle: "OK")
+            alert.alertStyle = .critical
             
             let modalResponse = alert.runModal()
             
             if modalResponse == NSAlertFirstButtonReturn {
-                NSApplication.sharedApplication().terminate(self)
+                NSApplication.shared().terminate(self)
                 return
             }
             return
         }
     }
     
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         
         let defaults = ["SecondsBetweenScreenshots":60, "FramesPerSecond":2]
-        NSUserDefaults.standardUserDefaults().registerDefaults(defaults)
+        UserDefaults.standard.register(defaults: defaults)
         
         /**/
         
-        let currentVersionString = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString")!
+        let currentVersionString = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString")!
         
         let iconImage = NSImage(named: "ScreenTime")
-        iconImage?.template = true
+        iconImage?.isTemplate = true
         
         self.statusItem.image = iconImage
         self.statusItem.highlightMode = true
@@ -91,8 +102,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         self.historyDepthSlider.action = #selector(AppDelegate.historySliderDidMove(_:))
         
         self.historyDepthSlider.allowsTickMarkValuesOnly = true
-        self.historyDepthSlider.maxValue = Double(self.dynamicType.historyDays.count - 1)
-        self.historyDepthSlider.numberOfTickMarks = self.dynamicType.historyDays.count
+        self.historyDepthSlider.maxValue = Double(type(of: self).historyDays.count - 1)
+        self.historyDepthSlider.numberOfTickMarks = type(of: self).historyDays.count
         
         self.updateHistoryDepthLabelDescription()
         self.updateHistoryDepthSliderPosition()
@@ -112,25 +123,25 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         self.updatePauseCaptureMenuItemState()
     }
     
-    func applicationWillTerminate(aNotification: NSNotification) {
+    func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
         
         self.stopTimer()
     }
     
-    func ensureThatDirectoryExistsByCreatingOneIfNeeded(path : String) -> Bool {
+    func ensureThatDirectoryExistsByCreatingOneIfNeeded(_ path : String) -> Bool {
         
-        let fm = NSFileManager.defaultManager()
+        let fm = FileManager.default
         var isDir : ObjCBool = false
-        let fileExists = fm.fileExistsAtPath(path, isDirectory:&isDir)
+        let fileExists = fm.fileExists(atPath: path, isDirectory:&isDir)
         if fileExists {
-            return Bool(isDir)
+            return isDir.boolValue
         }
         
         // create file
         
         do {
-            try NSFileManager.defaultManager().createDirectoryAtPath(path, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
             print("-- created", path);
             return true
         } catch {
@@ -149,13 +160,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             let alert = NSAlert()
             alert.messageText = "ScreenTime cannot run"
             alert.informativeText = "Cannot use ~/Library/ScreenTime/ for screenshots";
-            alert.addButtonWithTitle("OK")
-            alert.alertStyle = .CriticalAlertStyle
+            alert.addButton(withTitle: "OK")
+            alert.alertStyle = .critical
             
             let modalResponse = alert.runModal()
             
             if modalResponse == NSAlertFirstButtonReturn {
-                NSApplication.sharedApplication().terminate(self)
+                NSApplication.shared().terminate(self)
             }
             
             return
@@ -164,11 +175,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         self.screenShooter = existingScreenShooter
         screenShooter.makeScreenshotsAndConsolidate(nil)
         
-        let timeInterval = NSUserDefaults.standardUserDefaults().integerForKey("SecondsBetweenScreenshots")
+        let timeInterval = UserDefaults.standard.integer(forKey: "SecondsBetweenScreenshots")
         
         self.timer.invalidate()
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(
-            NSTimeInterval(timeInterval),
+        self.timer = Timer.scheduledTimer(
+            timeInterval: TimeInterval(timeInterval),
             target: screenShooter,
             selector: #selector(ScreenShooter.makeScreenshotsAndConsolidate(_:)),
             userInfo: nil,
@@ -190,43 +201,43 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     func updateSkipScreensaverMenuItemState() {
-        let skipScreensaver = NSUserDefaults.standardUserDefaults().boolForKey("SkipScreensaver")
+        let skipScreensaver = UserDefaults.standard.bool(forKey: "SkipScreensaver")
         skipScreensaverMenuItem.state = skipScreensaver ? NSOnState : NSOffState
     }
     
     func updatePauseCaptureMenuItemState() {
-        let captureIsPaused = self.timer.valid == false
+        let captureIsPaused = self.timer.isValid == false
         pauseCaptureMenuItem.state = captureIsPaused ? NSOnState : NSOffState
     }
     
-    @IBAction func about(sender:NSControl) {
-        if let url = NSURL(string:"http://seriot.ch/screentime/") {
-            NSWorkspace.sharedWorkspace().openURL(url)
+    @IBAction func about(_ sender:NSControl) {
+        if let url = URL(string:"http://seriot.ch/screentime/") {
+            NSWorkspace.shared().open(url)
         }
     }
     
-    @IBAction func openFolder(sender:NSControl) {
-        NSWorkspace.sharedWorkspace().openFile(dirPath)
+    @IBAction func openFolder(_ sender:NSControl) {
+        NSWorkspace.shared().openFile(dirPath)
     }
     
-    @IBAction func toggleSkipScreensaver(sender:NSControl) {
-        let skipScreensaver = NSUserDefaults.standardUserDefaults().boolForKey("SkipScreensaver")
+    @IBAction func toggleSkipScreensaver(_ sender:NSControl) {
+        let skipScreensaver = UserDefaults.standard.bool(forKey: "SkipScreensaver")
         
-        NSUserDefaults.standardUserDefaults().setBool(!skipScreensaver, forKey: "SkipScreensaver");
+        UserDefaults.standard.set(!skipScreensaver, forKey: "SkipScreensaver");
         
-        NSUserDefaults.standardUserDefaults().synchronize()
+        UserDefaults.standard.synchronize()
         
         self.updateSkipScreensaverMenuItemState()
     }
     
-    @IBAction func toggleStartAtLogin(sender:NSControl) {
+    @IBAction func toggleStartAtLogin(_ sender:NSControl) {
         LaunchServicesHelper().toggleLaunchAtStartup()
         
         self.updateStartAtLaunchMenuItemState()
     }
     
-    @IBAction func togglePause(sender:NSControl) {
-        let captureWasPaused = self.timer.valid == false
+    @IBAction func togglePause(_ sender:NSControl) {
+        let captureWasPaused = self.timer.isValid == false
         
         if captureWasPaused {
             self.startTimer()
@@ -236,17 +247,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         let imageName = captureWasPaused ? "ScreenTime" : "ScreenTimePaused"
         let iconImage = NSImage(named: imageName)!
-        iconImage.template = true
+        iconImage.isTemplate = true
         self.statusItem.image = iconImage
         
         self.updatePauseCaptureMenuItemState()
     }
     
-    @IBAction func quit(sender:NSControl) {
-        NSApplication.sharedApplication().terminate(self)
+    @IBAction func quit(_ sender:NSControl) {
+        NSApplication.shared().terminate(self)
     }
     
-    @IBAction func historySliderDidMove(slider:NSSlider) {
+    @IBAction func historySliderDidMove(_ slider:NSSlider) {
         
         let sliderValue = slider.integerValue
         print("-- \(sliderValue)")
@@ -257,22 +268,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         let numberOfDays = AppDelegate.historyNumberOfDaysForSliderValue(sliderValue)
         
-        NSUserDefaults.standardUserDefaults().setInteger(numberOfDays, forKey: "HistoryToKeepInDays")
+        UserDefaults.standard.set(numberOfDays, forKey: "HistoryToKeepInDays")
     }
     
     func checkForUpdates() {
         
-        let url = NSURL(string:"http://www.seriot.ch/screentime/screentime.json")
+        let url = URL(string:"http://www.seriot.ch/screentime/screentime.json")
         
-        NSURLSession.sharedSession().dataTaskWithURL(url!) { (optionalData, response, error) -> Void in
+        URLSession.shared.dataTask(with: url!, completionHandler: { (optionalData, response, error) -> Void in
             
-            dispatch_async(dispatch_get_main_queue(),{
+            DispatchQueue.main.async(execute: {
                 
                 guard let data = optionalData,
-                    optionalDict = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? [String:AnyObject],
-                    d = optionalDict,
-                    latestVersionString = d["latest_version_string"] as? String,
-                    latestVersionURL = d["latest_version_url"] as? String
+                    let optionalDict = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:AnyObject],
+                    let d = optionalDict,
+                    let latestVersionString = d["latest_version_string"] as? String,
+                    let latestVersionURL = d["latest_version_url"] as? String
                 else {
                     return
                 }
@@ -280,7 +291,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 print("-- latestVersionString: \(latestVersionString)")
                 print("-- latestVersionURL: \(latestVersionURL)")
                 
-                let currentVersionString = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as? String
+                let currentVersionString = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
                 
                 let needsUpdate = currentVersionString < latestVersionString
                 
@@ -290,32 +301,32 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 let alert = NSAlert()
                 alert.messageText = "ScreenTime \(latestVersionString) is Available"
                 alert.informativeText = "Please download it and replace the current version.";
-                alert.addButtonWithTitle("Download")
-                alert.addButtonWithTitle("Cancel")
-                alert.alertStyle = .CriticalAlertStyle
+                alert.addButton(withTitle: "Download")
+                alert.addButton(withTitle: "Cancel")
+                alert.alertStyle = .critical
                 
                 let modalResponse = alert.runModal()
                 
                 if modalResponse == NSAlertFirstButtonReturn {
-                    if let downloadURL = NSURL(string:latestVersionURL) {
-                        NSWorkspace.sharedWorkspace().openURL(downloadURL)
+                    if let downloadURL = URL(string:latestVersionURL) {
+                        NSWorkspace.shared().open(downloadURL)
                     }
                 }
                 
             })
-            }.resume()
+            }) .resume()
     }
     
-    class func sliderValueForNumberOfDays(numberOfDays:Int) -> Int {
+    class func sliderValueForNumberOfDays(_ numberOfDays:Int) -> Int {
         
-        if let i = self.historyDays.indexOf(numberOfDays) {
+        if let i = self.historyDays.index(of: numberOfDays) {
             return i
         }
         
         return 0
     }
     
-    class func historyNumberOfDaysForSliderValue(value:Int) -> Int {
+    class func historyNumberOfDaysForSliderValue(_ value:Int) -> Int {
         
         if value >= self.historyDays.count {
             return 0
@@ -324,7 +335,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return self.historyDays[value]
     }
     
-    class func historyPeriodDescriptionForSliderValue(value:Int) -> String {
+    class func historyPeriodDescriptionForSliderValue(_ value:Int) -> String {
         let i = self.historyNumberOfDaysForSliderValue(value)
         
         if i == 0 { return "Never" }
@@ -334,7 +345,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     func updateHistoryDepthLabelDescription() {
-        let numberOfDays = NSUserDefaults.standardUserDefaults().integerForKey("HistoryToKeepInDays")
+        let numberOfDays = UserDefaults.standard.integer(forKey: "HistoryToKeepInDays")
         
         let sliderValue = AppDelegate.sliderValueForNumberOfDays(numberOfDays)
         
@@ -344,24 +355,27 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     func updateHistoryDepthSliderPosition() {
-        let numberOfDays = NSUserDefaults.standardUserDefaults().integerForKey("HistoryToKeepInDays")
+        let numberOfDays = UserDefaults.standard.integer(forKey: "HistoryToKeepInDays")
         historyDepthSlider.integerValue = AppDelegate.sliderValueForNumberOfDays(numberOfDays)
     }
     
     // MARK: - NSMenuDelegate
     
-    func menuWillOpen(menu:NSMenu) {
+    func menuWillOpen(_ menu:NSMenu) {
         
         self.updateStartAtLaunchMenuItemState()
         
-        if let modifierFlags = NSApp.currentEvent?.modifierFlags {
-            let optionKeyIsPressed = (modifierFlags.rawValue & NSEventModifierFlags.AlternateKeyMask.rawValue) == NSEventModifierFlags.AlternateKeyMask.rawValue
-            let commandKeyIsPressed = (modifierFlags.rawValue & NSEventModifierFlags.CommandKeyMask.rawValue) == NSEventModifierFlags.CommandKeyMask.rawValue
-            if(optionKeyIsPressed && commandKeyIsPressed) {
-                screenShooter.makeScreenshotsAndConsolidate(nil)
-            }
-            self.versionMenuItem.hidden = optionKeyIsPressed == false;
+        guard let e = NSApp.currentEvent else { print("-- no event"); return }
+        
+        let modifierFlags = e.modifierFlags
+            
+        let optionKeyIsPressed = modifierFlags.contains(.option)
+        let commandKeyIsPressed = modifierFlags.contains(.command)
+
+        if(optionKeyIsPressed && commandKeyIsPressed) {
+            screenShooter.makeScreenshotsAndConsolidate(nil)
         }
+        self.versionMenuItem.isHidden = optionKeyIsPressed == false;
         
         // build history contents according to file system's contents
         
@@ -371,13 +385,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let namesAndPaths = Consolidator.movies(dirPath)
         
         for (n,p) in namesAndPaths {
-            if let historyItem = subMenu.addItemWithTitle(n, action: #selector(AppDelegate.historyItemAction(_:)), keyEquivalent: "") {
-                historyItem.representedObject = p
-            }
+            let historyItem = subMenu.addItem(withTitle: n, action: #selector(AppDelegate.historyItemAction(_:)), keyEquivalent: "")
+            historyItem.representedObject = p
         }
     }
     
-    func historyItemAction(menuItem:NSMenuItem) {
+    func historyItemAction(_ menuItem:NSMenuItem) {
         if let path = menuItem.representedObject as? String {
             print("-- open \(path)")
             NSWorkspace().openFile(path)

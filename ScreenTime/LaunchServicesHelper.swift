@@ -19,23 +19,23 @@ import Foundation
 // Refined version of http://stackoverflow.com/a/27442962
 class LaunchServicesHelper {
     
-    let applicationURL = NSURL(fileURLWithPath: NSBundle.mainBundle().bundlePath)
+    let applicationURL = URL(fileURLWithPath: Bundle.main.bundlePath)
     
     var applicationIsInStartUpItems: Bool {
         return itemReferencesInLoginItems.existingItem != nil
     }
     
     var itemReferencesInLoginItems: (existingItem: LSSharedFileListItem?, lastItem: LSSharedFileListItem?) {
-        let itemURL = UnsafeMutablePointer<Unmanaged<CFURL>?>.alloc(1)
+        let itemURL = UnsafeMutablePointer<Unmanaged<CFURL>?>.allocate(capacity: 1)
         let loginItemsList = LSSharedFileListCreate(nil, kLSSharedFileListSessionLoginItems.takeRetainedValue(), nil).takeRetainedValue()
         // Can't cast directly from CFArray to Swift Array, so the CFArray needs to be bridged to a NSArray first
         let loginItemsListSnapshot: NSArray = LSSharedFileListCopySnapshot(loginItemsList, nil).takeRetainedValue()
         if let loginItems = loginItemsListSnapshot as? [LSSharedFileListItem] {
             for loginItem in loginItems {
                 if LSSharedFileListItemResolve(loginItem, 0, itemURL, nil) == noErr {
-                    if let URL = itemURL.memory?.takeRetainedValue() {
+                    if let URL = itemURL.pointee?.takeRetainedValue() {
                         // Check whether the item is for this application
-                        if URL == applicationURL {
+                        if URL as URL == applicationURL {
                             return (loginItem, loginItems.last)
                         }
                     }
@@ -55,7 +55,7 @@ class LaunchServicesHelper {
             LSSharedFileListItemRemove(loginItemsList, existingItem)
         } else {
             // Add application to login items
-            LSSharedFileListInsertItemURL(loginItemsList, itemReferences.lastItem, nil, nil, applicationURL, nil, nil)
+            LSSharedFileListInsertItemURL(loginItemsList, itemReferences.lastItem, nil, nil, applicationURL as CFURL!, nil, nil)
         }
     }
 }

@@ -8,26 +8,26 @@
 
 import Foundation
 
-extension NSDate {
+extension Date {
 
-    private static var srt_timestampDateFormatter : NSDateFormatter {
-        let df = NSDateFormatter()
+    fileprivate static var srt_timestampDateFormatter : DateFormatter {
+        let df = DateFormatter()
         df.dateFormat = "yyyyMMddHHmmss"
         return df
     }
 
-    private static var srt_prettyDateFormatter : NSDateFormatter {
-        let df = NSDateFormatter()
+    fileprivate static var srt_prettyDateFormatter : DateFormatter {
+        let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return df
     }
 
     func srt_timestamp() -> String {
-        return NSDate.srt_timestampDateFormatter.stringFromDate(self)
+        return Date.srt_timestampDateFormatter.string(from: self)
     }
     
-    class func srt_prettyDateFromTimestamp(timestamp:String) -> String {
-        let date = NSDate.srt_timestampDateFormatter.dateFromString(timestamp)
-        return NSDate.srt_prettyDateFormatter.stringFromDate(date!)
+    static func srt_prettyDateFromTimestamp(_ timestamp:String) -> String {
+        let date = Date.srt_timestampDateFormatter.date(from: timestamp)
+        return Date.srt_prettyDateFormatter.string(from: date!)
     }
 }

@@ -9,18 +9,19 @@
 // inspired by Erica Sadun's MovieMaker class
 // https://github.com/erica/useful-things/tree/master/useful%20pack/Movie%20Maker
 
+import AppKit
 import AVFoundation
 
-public class MovieMaker {
+open class MovieMaker {
         
-    private var height : Int
-    private var width : Int
-    private var framesPerSecond : UInt?
-    private var frameCount : UInt?
+    fileprivate var height : Int
+    fileprivate var width : Int
+    fileprivate var framesPerSecond : UInt?
+    fileprivate var frameCount : UInt?
     
-    private var writer : AVAssetWriter!
-    private var input : AVAssetWriterInput?
-    private var adaptor : AVAssetWriterInputPixelBufferAdaptor?
+    fileprivate var writer : AVAssetWriter!
+    fileprivate var input : AVAssetWriterInput?
+    fileprivate var adaptor : AVAssetWriterInputPixelBufferAdaptor?
     
     public init?(path:String, frameSize:CGSize, fps:UInt) {
         
@@ -32,14 +33,14 @@ public class MovieMaker {
             return
         }
         
-        let dm = NSFileManager.defaultManager()
+        let dm = FileManager.default
         
-        if dm.fileExistsAtPath(path) {
-            let globallyUniqueString = NSProcessInfo.processInfo().globallyUniqueString
+        if dm.fileExists(atPath: path) {
+            let globallyUniqueString = ProcessInfo.processInfo.globallyUniqueString
             let newPath = path + "_\(globallyUniqueString)"
             
             do {
-                try dm.moveItemAtPath(path, toPath: newPath)
+                try dm.moveItem(atPath: path, toPath: newPath)
             } catch {
                 print("-- cannot move \(path) to \(newPath)")
                 return nil
@@ -51,11 +52,11 @@ public class MovieMaker {
         self.frameCount = 0;
         
         // Create Movie URL
-        let movieURL = NSURL(fileURLWithPath: path)
+        let movieURL = URL(fileURLWithPath: path)
         
         // Create Asset Writer
         do {
-            self.writer = try AVAssetWriter(URL: movieURL, fileType: AVFileTypeQuickTimeMovie)
+            self.writer = try AVAssetWriter(outputURL: movieURL, fileType: AVFileTypeQuickTimeMovie)
         } catch {
             print("-- error: cannot create asset writer, \(error)")
             return nil
@@ -63,13 +64,13 @@ public class MovieMaker {
         
         // Create Input
         var videoSettings = [String:AnyObject]()
-        videoSettings[AVVideoCodecKey] = AVVideoCodecH264
-        videoSettings[AVVideoWidthKey] = width
-        videoSettings[AVVideoHeightKey] = height
+        videoSettings[AVVideoCodecKey] = AVVideoCodecH264 as AnyObject?
+        videoSettings[AVVideoWidthKey] = width as AnyObject?
+        videoSettings[AVVideoHeightKey] = height as AnyObject?
         
         self.input = AVAssetWriterInput(mediaType: AVMediaTypeVideo, outputSettings: videoSettings)
         
-        self.writer.addInput(input!)
+        self.writer.add(input!)
         
         // Build adapter
         self.adaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: input!, sourcePixelBufferAttributes: nil)
@@ -79,53 +80,53 @@ public class MovieMaker {
             return nil
         }
         
-        writer.startSessionAtSourceTime(kCMTimeZero)
+        writer.startSession(atSourceTime: kCMTimeZero)
     }
     
     @objc(mergeMovieAtPaths:intoPath:completionHandler:error:)
-    public class func mergeMovies(inPath:[String], outPath:String, completionHandler:((path:String) -> ())) throws {
+    open class func mergeMovies(_ inPath:[String], outPath:String, completionHandler:@escaping ((_ path:String) -> ())) throws {
         
         let composition = AVMutableComposition()
         
-        let composedTrack = composition.addMutableTrackWithMediaType(AVMediaTypeVideo, preferredTrackID: kCMPersistentTrackID_Invalid)
+        let composedTrack = composition.addMutableTrack(withMediaType: AVMediaTypeVideo, preferredTrackID: kCMPersistentTrackID_Invalid)
         
         var time = kCMTimeZero
         
         try inPath.forEach { (inPath) -> () in
-            let fileURL = NSURL(fileURLWithPath: inPath)
-            let asset = AVURLAsset(URL: fileURL)
-            let videoTracks = asset.tracksWithMediaType(AVMediaTypeVideo)
+            let fileURL = URL(fileURLWithPath: inPath)
+            let asset = AVURLAsset(url: fileURL)
+            let videoTracks = asset.tracks(withMediaType: AVMediaTypeVideo)
             let firstTrack = videoTracks.first
             
             guard let existingFirstTrack = firstTrack else { return }
             
             let timeRange = CMTimeRangeMake(kCMTimeZero, asset.duration)
             
-            try composedTrack.insertTimeRange(timeRange, ofTrack: existingFirstTrack, atTime: time)
+            try composedTrack.insertTimeRange(timeRange, of: existingFirstTrack, at: time)
             
             try composedTrack.insertTimeRange(
                 CMTimeRangeMake(kCMTimeZero, asset.duration),
-                ofTrack: existingFirstTrack,
-                atTime: time)
+                of: existingFirstTrack,
+                at: time)
             
             time = CMTimeAdd(time, asset.duration);
         }
         
         /**/
         
-        let fm = NSFileManager.defaultManager()
+        let fm = FileManager.default
         
-        if fm.fileExistsAtPath(outPath) {
-            try fm.removeItemAtPath(outPath)
+        if fm.fileExists(atPath: outPath) {
+            try fm.removeItem(atPath: outPath)
         }
         
         guard let exporter = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetAppleProRes422LPCM) else { return }
         
-        exporter.outputURL = NSURL(fileURLWithPath: outPath)
+        exporter.outputURL = URL(fileURLWithPath: outPath)
         exporter.outputFileType = AVFileTypeQuickTimeMovie
         exporter.shouldOptimizeForNetworkUse = true
         
-        exporter.exportAsynchronouslyWithCompletionHandler({ () -> Void in
+        exporter.exportAsynchronously(completionHandler: { () -> Void in
             /*
             AVAssetExportSessionStatusUnknown,
             AVAssetExportSessionStatusWaiting,
@@ -136,25 +137,25 @@ public class MovieMaker {
             */
             
             switch(exporter.status) {
-            case .Completed:
-                completionHandler(path:outPath)
+            case .completed:
+                completionHandler(outPath)
             default:
                 print(exporter.status)
             }
         })
     }
     
-    public func appendImage(image:NSImage) -> Bool {
+    open func appendImage(_ image:NSImage) -> Bool {
         
         return self.appendImageFromDrawing({ [unowned self] (context) -> () in
-            let rect = CGRectMake(0, 0, CGFloat(self.width), CGFloat(self.height))
-            NSColor.blackColor().set()
+            let rect = CGRect(x:0, y:0, width:CGFloat(self.width), height:CGFloat(self.height))
+            NSColor.black.set()
             NSRectFill(rect)
-            image.drawInRect(rect)
+            image.draw(in:rect)
             })
     }
     
-    public func appendImageFromDrawing(@noescape drawingBlock:(context:CGContextRef) -> ()) -> Bool {
+    open func appendImageFromDrawing(_ drawingBlock: (_ context:CGContext) -> ()) -> Bool {
         
         guard let pixelBufferRef = self.createPixelBufferFromDrawing(drawingBlock) else {
             return false
@@ -164,7 +165,7 @@ public class MovieMaker {
             return false
         }
         
-        while(existingInput.readyForMoreMediaData == false) {}
+        while(existingInput.isReadyForMoreMediaData == false) {}
         
         guard let existingFrameCount = self.frameCount else { return false }
         guard let existimeFramesPerSecond = self.framesPerSecond else { return false }
@@ -172,7 +173,7 @@ public class MovieMaker {
         guard let existingAdaptor = self.adaptor else { return false }
         
         let cmTime = CMTimeMake(Int64(existingFrameCount), Int32(existimeFramesPerSecond))
-        let success = existingAdaptor.appendPixelBuffer(pixelBufferRef, withPresentationTime: cmTime)
+        let success = existingAdaptor.append(pixelBufferRef, withPresentationTime: cmTime)
         
         if success == false {
             print("-- error writing frame \(self.frameCount!)")
@@ -184,7 +185,7 @@ public class MovieMaker {
         return success
     }
     
-    public func endWritingMovieWithWithCompletionHandler(completionHandler:(path:String) -> ()) {
+    open func endWritingMovieWithWithCompletionHandler(_ completionHandler:@escaping (_ path:String) -> ()) {
         //    frameCount++;
         
         guard let existingInput = self.input else { return }
@@ -193,16 +194,16 @@ public class MovieMaker {
         
         //    [_writer endSessionAtSourceTime:CMTimeMake(frameCount, (int32_t) framesPerSecond)];
         
-        self.writer.finishWritingWithCompletionHandler { () -> Void in
-            guard let path = self.writer.outputURL.path else { return }
+        self.writer.finishWriting { () -> Void in
+            let path = self.writer.outputURL.path
             print("-- wrote", path)
             self.input = nil
             self.adaptor = nil
-            completionHandler(path:path)
+            completionHandler(path)
         }
     }
     
-    private func createPixelBuffer() -> CVPixelBufferRef? {
+    fileprivate func createPixelBuffer() -> CVPixelBuffer? {
         
         // Create Pixel Buffer
         let pixelBufferOptions : NSDictionary = [kCVPixelBufferCGImageCompatibilityKey as NSString:true, kCVPixelBufferCGBitmapContextCompatibilityKey as NSString:true];
@@ -224,38 +225,38 @@ public class MovieMaker {
         return pixelBuffer
     }
     
-    private func createPixelBufferFromDrawing(@noescape contextDrawingBlock:(context:CGContextRef) -> ()) -> CVPixelBufferRef? {
+    fileprivate func createPixelBufferFromDrawing(_ contextDrawingBlock: (_ context:CGContext) -> ()) -> CVPixelBuffer? {
         
         guard let pixelBufferRef = self.createPixelBuffer() else { return nil }
         
-        CVPixelBufferLockBaseAddress(pixelBufferRef, 0)
+        CVPixelBufferLockBaseAddress(pixelBufferRef, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0)))
         let pixelData = CVPixelBufferGetBaseAddress(pixelBufferRef)
         let RGBColorSpace = CGColorSpaceCreateDeviceRGB()
         
-        guard let context = CGBitmapContextCreate(
-            pixelData,
-            self.width,
-            self.height,
-            8,
-            4 * self.width,
-            RGBColorSpace,
-            CGImageAlphaInfo.NoneSkipFirst.rawValue) else {
+        guard let context = CGContext(
+            data: pixelData,
+            width: self.width,
+            height: self.height,
+            bitsPerComponent: 8,
+            bytesPerRow: 4 * self.width,
+            space: RGBColorSpace,
+            bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue) else {
                 print("-- error creating bitmap context")
-                CVPixelBufferUnlockBaseAddress(pixelBufferRef, 0)
+                CVPixelBufferUnlockBaseAddress(pixelBufferRef, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0)))
                 return nil
         }
         
         // Perform drawing
         NSGraphicsContext.saveGraphicsState()
-        let gc = NSGraphicsContext(CGContext: context, flipped: false)
+        let gc = NSGraphicsContext(cgContext: context, flipped: false)
         
-        NSGraphicsContext.setCurrentContext(gc)
+        NSGraphicsContext.setCurrent(gc)
         
-        contextDrawingBlock(context: context)
+        contextDrawingBlock(context)
         
         NSGraphicsContext.restoreGraphicsState()
         
-        CVPixelBufferUnlockBaseAddress(pixelBufferRef, 0);
+        CVPixelBufferUnlockBaseAddress(pixelBufferRef, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0)));
         
         return pixelBufferRef;
     }

@@ -158,6 +158,7 @@
 				TargetAttributes = {
 					033688E51C410FE300FE23CB = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 					033688F41C410FE300FE23CB = {
 						CreatedOnToolsVersion = 7.2;
@@ -337,6 +338,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.seriot.ScreenTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -349,6 +351,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.seriot.ScreenTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -397,6 +400,7 @@
 				033689001C410FE300FE23CB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		033689011C410FE300FE23CB /* Build configuration list for PBXNativeTarget "ScreenTimeTests" */ = {
 			isa = XCConfigurationList;
@@ -405,6 +409,7 @@
 				033689031C410FE300FE23CB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

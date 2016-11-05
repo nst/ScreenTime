@@ -9,12 +9,12 @@
 import AppKit
 
 extension NSImage {
-    func srt_writeAsJpeg(path:String) -> Bool {
-        guard let imageData = self.TIFFRepresentation else { return false }
+    func srt_writeAsJpeg(_ path:String) -> Bool {
+        guard let imageData = self.tiffRepresentation else { return false }
         let bitmapRep = NSBitmapImageRep(data: imageData)
-        guard let jpegData = bitmapRep?.representationUsingType(.NSJPEGFileType, properties: [NSImageCompressionFactor : 0.8]) else { return false }
+        guard let jpegData = bitmapRep?.representation(using:NSBitmapImageFileType.JPEG, properties: [NSImageCompressionFactor : 0.8]) else { return false }
         do {
-            try jpegData.writeToFile(path, options: .AtomicWrite)
+            try jpegData.write(to: URL(fileURLWithPath:path))
         } catch {
             print("-- can't write, error", error)
             return false
