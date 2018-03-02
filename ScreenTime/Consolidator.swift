@@ -29,12 +29,12 @@ class Consolidator {
     
     class func writeMovieFromJpgPaths(_ dirPath:String, jpgPaths:[String], movieName:String, displayIDString:NSString, fps:Int, completionHandler:@escaping (String) -> ()) {
         
-        guard jpgPaths.isEmpty == false else {
+        if jpgPaths.isEmpty {
             print("-- no screenshots to turn into movie")
             return
         }
         
-        guard fps > 0 else {
+        if fps <= 0 {
             print("-- fps must be > 0")
             return
         }
