@@ -70,7 +70,11 @@ class Consolidator {
             
             let timestamp = timestampInFilename(jpgPath)
             
-            let formattedDate = Date.srt_prettyDateFromTimestamp(timestamp)
+            var formattedDate = timestamp
+            
+            if let s = Date.srt_prettyDateFromLongTimestamp(timestamp) {
+                formattedDate = s
+            }
             
             _ = movieMaker.appendImageFromDrawing({ (context) -> () in
                 

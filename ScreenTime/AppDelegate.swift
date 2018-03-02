@@ -389,8 +389,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let namesAndPaths = Consolidator.movies(dirPath)
         
         for (n,p) in namesAndPaths {
-            let historyItem = subMenu.addItem(withTitle: n, action: #selector(AppDelegate.historyItemAction(_:)), keyEquivalent: "")
-//            let historyItem = subMenu.addItem(withTitle: n, action: #selector(AppDelegate.historyItemAction(_:)), keyEquivalent: "")
+            var title = Consolidator.timestampInFilename(n)
+            if let s = Date.srt_prettyDateFromShortTimestamp(title) {
+                title = s
+            } else if let s = Date.srt_prettyDateFromMediumTimestamp(title) {
+                title = s
+            } else if let s = Date.srt_prettyDateFromLongTimestamp(title) {
+                title = s
+            }
+            let historyItem = subMenu.addItem(withTitle: title, action: #selector(AppDelegate.historyItemAction(_:)), keyEquivalent: "")
             historyItem.representedObject = p
         }
     }
