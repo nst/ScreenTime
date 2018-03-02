@@ -47,7 +47,14 @@ class ScreenTimeTests: XCTestCase {
             ["/tmp/20150601000000_123.jpg", "/tmp/20150601000100_123.jpg"]
         ]
         
-        XCTAssertEqual(jpgGroups, expectedJPGs)
+        XCTAssertEqual(jpgGroups.count, expectedJPGs.count)
+        
+        for (i,o1) in jpgGroups.enumerated() {
+            let o2 = expectedJPGs[i]
+            XCTAssertEqual(o1, o2)
+        }
+        
+        /**/
         
         let movGroups = Consolidator.filterFilename(filenames,
             dirPath: "/tmp",
@@ -60,12 +67,17 @@ class ScreenTimeTests: XCTestCase {
             ["/tmp/2015061510_111.mov", "/tmp/2015061511_111.mov"]
         ]
         
-        XCTAssertEqual(movGroups, expectedMOVs)
+        XCTAssertEqual(movGroups.count, expectedMOVs.count)
+        
+        for (i,o1) in movGroups.enumerated() {
+            let o2 = expectedMOVs[i]
+            XCTAssertEqual(o1, o2)
+        }
     }
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
-        self.measureBlock {
+        self.measure {
             // Put the code you want to measure the time of here.
         }
     }
