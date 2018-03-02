@@ -83,7 +83,7 @@ open class MovieMaker {
         writer.startSession(atSourceTime: kCMTimeZero)
     }
     
-    @objc(mergeMovieAtPaths:intoPath:completionHandler:error:)
+    //@objc(mergeMovieAtPaths:intoPath:completionHandler:error:)
     open class func mergeMovies(_ inPath:[String], outPath:String, completionHandler:@escaping ((_ path:String) -> ())) throws {
         
         let composition = AVMutableComposition()
@@ -95,21 +95,19 @@ open class MovieMaker {
         var time = kCMTimeZero
         
         try inPath.forEach { (inPath) -> () in
+            
             let fileURL = URL(fileURLWithPath: inPath)
             let asset = AVURLAsset(url: fileURL)
             let videoTracks = asset.tracks(withMediaType: .video)
-            let firstTrack = videoTracks.first
             
-            guard let existingFirstTrack = firstTrack else { return }
+            guard let firstTrack = videoTracks.first else {
+                print("-- no first track in \(inPath)")
+                return
+            }
             
             let timeRange = CMTimeRangeMake(kCMTimeZero, asset.duration)
             
-            try composedTrack.insertTimeRange(timeRange, of: existingFirstTrack, at: time)
-            
-            try composedTrack.insertTimeRange(
-                CMTimeRangeMake(kCMTimeZero, asset.duration),
-                of: existingFirstTrack,
-                at: time)
+            try composedTrack.insertTimeRange(timeRange, of: firstTrack, at: time)
             
             time = CMTimeAdd(time, asset.duration);
         }
@@ -140,10 +138,10 @@ open class MovieMaker {
             
             switch(exporter.status) {
             case .completed:
-                completionHandler(outPath)
+                    completionHandler(outPath)
             default:
-                print(exporter.status)
-            }
+                    print(exporter.status)
+                }
         })
     }
     
