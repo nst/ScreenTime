@@ -87,12 +87,12 @@ class Consolidator {
                 
                 NSColor.white.setFill()
                 NSColor.black.setStroke()
-                NSRectFill(stringRect)
+                stringRect.fill()
                 NSBezierPath.stroke(stringRect)
                 
                 // draw string
                 let font = NSFont(name:"Courier", size:24)!
-                let attributes : [String:AnyObject] = [NSFontAttributeName:font, NSForegroundColorAttributeName:NSColor.blue]
+                let attributes : [NSAttributedStringKey:AnyObject] = [.font:font, .foregroundColor:NSColor.blue]
                 
                 let s = NSAttributedString(string: (formattedDate as NSString).lastPathComponent, attributes: attributes)
                 s.draw(at: CGPoint(x: STRING_RECT_ORIGIN_X + 16, y: STRING_RECT_ORIGIN_Y + 16))

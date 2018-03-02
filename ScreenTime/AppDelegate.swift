@@ -47,7 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         //
         
-        self.statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
+        self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         
         //
         
@@ -70,8 +70,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             
             let modalResponse = alert.runModal()
             
-            if modalResponse == NSAlertFirstButtonReturn {
-                NSApplication.shared().terminate(self)
+            if modalResponse == .alertFirstButtonReturn {
+                NSApplication.shared.terminate(self)
                 return
             }
             return
@@ -88,7 +88,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         let currentVersionString = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString")!
         
-        let iconImage = NSImage(named: "ScreenTime")
+        let imageName = NSImage.Name(rawValue: "ScreenTime")
+        let iconImage = NSImage(named: imageName)
         iconImage?.isTemplate = true
         
         self.statusItem.image = iconImage
@@ -165,8 +166,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             
             let modalResponse = alert.runModal()
             
-            if modalResponse == NSAlertFirstButtonReturn {
-                NSApplication.shared().terminate(self)
+            if modalResponse == .alertFirstButtonReturn {
+                NSApplication.shared.terminate(self)
             }
             
             return
@@ -197,27 +198,27 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     func updateStartAtLaunchMenuItemState() {
         let startAtLogin = LaunchServicesHelper().applicationIsInStartUpItems
-        startAtLoginMenuItem.state = startAtLogin ? NSOnState : NSOffState;
+        startAtLoginMenuItem.state = startAtLogin ? .on : .off;
     }
     
     func updateSkipScreensaverMenuItemState() {
         let skipScreensaver = UserDefaults.standard.bool(forKey: "SkipScreensaver")
-        skipScreensaverMenuItem.state = skipScreensaver ? NSOnState : NSOffState
+        skipScreensaverMenuItem.state = skipScreensaver ? .on : .off
     }
     
     func updatePauseCaptureMenuItemState() {
         let captureIsPaused = self.timer.isValid == false
-        pauseCaptureMenuItem.state = captureIsPaused ? NSOnState : NSOffState
+        pauseCaptureMenuItem.state = captureIsPaused ? .on : .off
     }
     
     @IBAction func about(_ sender:NSControl) {
         if let url = URL(string:"http://seriot.ch/screentime/") {
-            NSWorkspace.shared().open(url)
+            NSWorkspace.shared.open(url)
         }
     }
     
     @IBAction func openFolder(_ sender:NSControl) {
-        NSWorkspace.shared().openFile(dirPath)
+        NSWorkspace.shared.openFile(dirPath)
     }
     
     @IBAction func toggleSkipScreensaver(_ sender:NSControl) {
@@ -245,16 +246,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             self.stopTimer()
         }
         
-        let imageName = captureWasPaused ? "ScreenTime" : "ScreenTimePaused"
-        let iconImage = NSImage(named: imageName)!
-        iconImage.isTemplate = true
-        self.statusItem.image = iconImage
+        let imageName = NSImage.Name(rawValue: captureWasPaused ? "ScreenTime" : "ScreenTimePaused")
+        if let iconImage = NSImage(named: imageName) {
+            iconImage.isTemplate = true
+            self.statusItem.image = iconImage
+        } else {
+            print("-- Error: cannot get image named \(imageName)")
+        }
         
         self.updatePauseCaptureMenuItemState()
     }
     
     @IBAction func quit(_ sender:NSControl) {
-        NSApplication.shared().terminate(self)
+        NSApplication.shared.terminate(self)
     }
     
     @IBAction func historySliderDidMove(_ slider:NSSlider) {
@@ -307,9 +311,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 
                 let modalResponse = alert.runModal()
                 
-                if modalResponse == NSAlertFirstButtonReturn {
+                if modalResponse == .alertFirstButtonReturn {
                     if let downloadURL = URL(string:latestVersionURL) {
-                        NSWorkspace.shared().open(downloadURL)
+                        NSWorkspace.shared.open(downloadURL)
                     }
                 }
                 
@@ -386,10 +390,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         for (n,p) in namesAndPaths {
             let historyItem = subMenu.addItem(withTitle: n, action: #selector(AppDelegate.historyItemAction(_:)), keyEquivalent: "")
+//            let historyItem = subMenu.addItem(withTitle: n, action: #selector(AppDelegate.historyItemAction(_:)), keyEquivalent: "")
             historyItem.representedObject = p
         }
     }
     
+    @objc
     func historyItemAction(_ menuItem:NSMenuItem) {
         if let path = menuItem.representedObject as? String {
             print("-- open \(path)")

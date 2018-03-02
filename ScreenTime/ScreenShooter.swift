@@ -56,7 +56,7 @@ class ScreenShooter {
     }
     
     func isRunningScreensaver() -> Bool {
-        let runningApplications = NSWorkspace.shared().runningApplications
+        let runningApplications = NSWorkspace.shared.runningApplications
         
         for app in runningApplications {
             if let bundlerIdentifier = app.bundleIdentifier {

@@ -12,7 +12,7 @@ extension NSImage {
     func srt_writeAsJpeg(_ path:String) -> Bool {
         guard let imageData = self.tiffRepresentation else { return false }
         let bitmapRep = NSBitmapImageRep(data: imageData)
-        guard let jpegData = bitmapRep?.representation(using:NSBitmapImageFileType.JPEG, properties: [NSImageCompressionFactor : 0.8]) else { return false }
+        guard let jpegData = bitmapRep?.representation(using:.jpeg, properties: [.compressionFactor : 0.8]) else { return false }
         do {
             try jpegData.write(to: URL(fileURLWithPath:path))
         } catch {

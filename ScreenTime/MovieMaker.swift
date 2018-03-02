@@ -56,7 +56,7 @@ open class MovieMaker {
         
         // Create Asset Writer
         do {
-            self.writer = try AVAssetWriter(outputURL: movieURL, fileType: AVFileTypeQuickTimeMovie)
+            self.writer = try AVAssetWriter(outputURL: movieURL, fileType: .mov)
         } catch {
             print("-- error: cannot create asset writer, \(error)")
             return nil
@@ -68,7 +68,7 @@ open class MovieMaker {
         videoSettings[AVVideoWidthKey] = width as AnyObject?
         videoSettings[AVVideoHeightKey] = height as AnyObject?
         
-        self.input = AVAssetWriterInput(mediaType: AVMediaTypeVideo, outputSettings: videoSettings)
+        self.input = AVAssetWriterInput(mediaType: .video, outputSettings: videoSettings)
         
         self.writer.add(input!)
         
@@ -88,14 +88,16 @@ open class MovieMaker {
         
         let composition = AVMutableComposition()
         
-        let composedTrack = composition.addMutableTrack(withMediaType: AVMediaTypeVideo, preferredTrackID: kCMPersistentTrackID_Invalid)
+        guard let composedTrack = composition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid) else {
+            throw NSError(domain: "ScreenTime", code: 0, userInfo: [NSLocalizedDescriptionKey:"Cannot add video track"])
+        }
         
         var time = kCMTimeZero
         
         try inPath.forEach { (inPath) -> () in
             let fileURL = URL(fileURLWithPath: inPath)
             let asset = AVURLAsset(url: fileURL)
-            let videoTracks = asset.tracks(withMediaType: AVMediaTypeVideo)
+            let videoTracks = asset.tracks(withMediaType: .video)
             let firstTrack = videoTracks.first
             
             guard let existingFirstTrack = firstTrack else { return }
@@ -123,7 +125,7 @@ open class MovieMaker {
         guard let exporter = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetAppleProRes422LPCM) else { return }
         
         exporter.outputURL = URL(fileURLWithPath: outPath)
-        exporter.outputFileType = AVFileTypeQuickTimeMovie
+        exporter.outputFileType = .mov
         exporter.shouldOptimizeForNetworkUse = true
         
         exporter.exportAsynchronously(completionHandler: { () -> Void in
@@ -150,7 +152,7 @@ open class MovieMaker {
         return self.appendImageFromDrawing({ [unowned self] (context) -> () in
             let rect = CGRect(x:0, y:0, width:CGFloat(self.width), height:CGFloat(self.height))
             NSColor.black.set()
-            NSRectFill(rect)
+            rect.fill()
             image.draw(in:rect)
             })
     }
@@ -250,8 +252,8 @@ open class MovieMaker {
         NSGraphicsContext.saveGraphicsState()
         let gc = NSGraphicsContext(cgContext: context, flipped: false)
         
-        NSGraphicsContext.setCurrent(gc)
-        
+        NSGraphicsContext.current = gc
+  
         contextDrawingBlock(context)
         
         NSGraphicsContext.restoreGraphicsState()
