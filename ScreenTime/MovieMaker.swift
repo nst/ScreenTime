@@ -13,7 +13,7 @@ import AppKit
 import AVFoundation
 
 open class MovieMaker {
-        
+    
     fileprivate var height : Int
     fileprivate var width : Int
     fileprivate var framesPerSecond : UInt?
@@ -27,7 +27,7 @@ open class MovieMaker {
         
         self.height = Int(frameSize.height)
         self.width = Int(frameSize.width)
-
+        
         guard fps > 0 else {
             print("-- error: frames per second must be a positive integer")
             return
@@ -128,20 +128,25 @@ open class MovieMaker {
         
         exporter.exportAsynchronously(completionHandler: { () -> Void in
             /*
-            AVAssetExportSessionStatusUnknown,
-            AVAssetExportSessionStatusWaiting,
-            AVAssetExportSessionStatusExporting,
-            AVAssetExportSessionStatusCompleted,
-            AVAssetExportSessionStatusFailed,
-            AVAssetExportSessionStatusCancelled
-            */
+             AVAssetExportSessionStatusUnknown,
+             AVAssetExportSessionStatusWaiting,
+             AVAssetExportSessionStatusExporting,
+             AVAssetExportSessionStatusCompleted,
+             AVAssetExportSessionStatusFailed,
+             AVAssetExportSessionStatusCancelled
+             */
             
             switch(exporter.status) {
             case .completed:
+                DispatchQueue.main.sync {
+                    print("-- mergeMovies export completed \(outPath)")
                     completionHandler(outPath)
+                }
             default:
+                DispatchQueue.main.sync {
                     print(exporter.status)
                 }
+            }
         })
     }
     
@@ -152,7 +157,7 @@ open class MovieMaker {
             NSColor.black.set()
             rect.fill()
             image.draw(in:rect)
-            })
+        })
     }
     
     open func appendImageFromDrawing(_ drawingBlock: (_ context:CGContext) -> ()) -> Bool {
@@ -211,11 +216,11 @@ open class MovieMaker {
         var pixelBuffer : CVPixelBuffer? = nil;
         
         let status : CVReturn = CVPixelBufferCreate(kCFAllocatorDefault,
-            self.width,
-            self.height,
-            kCVPixelFormatType_32ARGB,
-            pixelBufferOptions as NSDictionary,
-            &pixelBuffer)
+                                                    self.width,
+                                                    self.height,
+                                                    kCVPixelFormatType_32ARGB,
+                                                    pixelBufferOptions as NSDictionary,
+                                                    &pixelBuffer)
         
         if (status != kCVReturnSuccess) {
             print("-- error creating pixel buffer")
@@ -251,7 +256,7 @@ open class MovieMaker {
         let gc = NSGraphicsContext(cgContext: context, flipped: false)
         
         NSGraphicsContext.current = gc
-  
+        
         contextDrawingBlock(context)
         
         NSGraphicsContext.restoreGraphicsState()
