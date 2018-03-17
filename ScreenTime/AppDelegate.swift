@@ -386,7 +386,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard let subMenu = self.historyContentsMenuItem.submenu else { return }
         subMenu.removeAllItems()
         
-        let namesAndPaths = Consolidator.movies(dirPath)
+        let namesAndPaths = Consolidator.movies(dirPath).sorted(by: { $0.path > $1.path })
         
         for (n,p) in namesAndPaths {
             var title = Consolidator.timestampInFilename(n)
