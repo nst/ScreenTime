@@ -277,9 +277,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     func checkForUpdates() {
         
-        let url = URL(string:"http://www.seriot.ch/screentime/screentime.json")
+        let url = URL(string:"http://www.seriot.ch/screentime/screentime.json")!
         
-        URLSession.shared.dataTask(with: url!, completionHandler: { (optionalData, response, error) -> Void in
+        let config = URLSessionConfiguration.default
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        config.urlCache = nil
+        
+        let session = URLSession.init(configuration: config)
+        
+        session.dataTask(with: url, completionHandler: { (optionalData, response, error) -> Void in
             
             DispatchQueue.main.async(execute: {
                 
