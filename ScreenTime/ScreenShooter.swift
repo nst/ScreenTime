@@ -93,7 +93,7 @@ class ScreenShooter {
 
         Task {
             do {
-                let content = try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: true)
+                let content = try await SCShareableContent.current
                 let displays = content.displays
 
                 for display in displays {
