@@ -39,6 +39,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSScreenCaptureUsageDescription</key>
+	<string>ScreenTime needs screen recording access to capture periodic screenshots of your desktop.</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2015 Nicolas Seriot. All rights reserved.</string>
 	<key>NSMainNibFile</key>
