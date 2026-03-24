@@ -67,6 +67,10 @@ open class MovieMaker {
         videoSettings[AVVideoCodecKey] = AVVideoCodecType.h264 as AnyObject?
         videoSettings[AVVideoWidthKey] = width as AnyObject?
         videoSettings[AVVideoHeightKey] = height as AnyObject?
+        videoSettings[AVVideoCompressionPropertiesKey] = [
+            AVVideoAverageBitRateKey: width * height * 4,
+            AVVideoProfileLevelKey: AVVideoProfileLevelH264HighAutoLevel
+        ] as AnyObject
         
         self.input = AVAssetWriterInput(mediaType: .video, outputSettings: videoSettings)
         
