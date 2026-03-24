@@ -232,7 +232,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func createMovieNow(_ sender: Any) {
         let c = Consolidator(dirPath: self.dirPath)
         do {
-            try c.consolidateScreenshotsIntoHourMovies()
+            try c.consolidateScreenshotsIntoHourMovies(includeCurrentHour: true)
             try c.consolidateHourMoviesIntoDayMovies()
         } catch {
             print("-- cannot consolidate, error \(error)")

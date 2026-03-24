@@ -242,13 +242,14 @@ open class MovieMaker {
         CVPixelBufferLockBaseAddress(pixelBufferRef, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0)))
         let pixelData = CVPixelBufferGetBaseAddress(pixelBufferRef)
         let RGBColorSpace = CGColorSpaceCreateDeviceRGB()
-        
+        let bytesPerRow = CVPixelBufferGetBytesPerRow(pixelBufferRef)
+
         guard let context = CGContext(
             data: pixelData,
             width: self.width,
             height: self.height,
             bitsPerComponent: 8,
-            bytesPerRow: 4 * self.width,
+            bytesPerRow: bytesPerRow,
             space: RGBColorSpace,
             bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue) else {
                 print("-- error creating bitmap context")

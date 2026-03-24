@@ -242,9 +242,16 @@ class Consolidator {
     }
     
     // screenshots -> hour movies
-    func consolidateScreenshotsIntoHourMovies() throws {
-        
-        let todayHour = (Date().srt_timestamp() as NSString).substring(to: 10)
+    func consolidateScreenshotsIntoHourMovies(includeCurrentHour: Bool = false) throws {
+
+        let todayHour : String
+        if includeCurrentHour {
+            // use a future timestamp so current hour screenshots are included
+            let nextHour = Date(timeIntervalSinceNow: 3600)
+            todayHour = (nextHour.srt_timestamp() as NSString).substring(to: 10)
+        } else {
+            todayHour = (Date().srt_timestamp() as NSString).substring(to: 10)
+        }
         let filenames = try FileManager.default.contentsOfDirectory(atPath: dirPath)
         
         let hourImagesArrays = Consolidator.filterFilename(
