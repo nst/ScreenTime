@@ -179,7 +179,7 @@ class Consolidator {
             
             for key in sortedKeys {
                 if let group = groupDictionary[key] {
-                    groups.append( group )
+                    groups.append( group.sorted() )
                 }
             }
             
@@ -222,12 +222,14 @@ class Consolidator {
             
             print("-- merging into \(outPath): \(hourMovies)")
             
-            do {
-                try MovieMaker.mergeMovies(hourMovies, outPath: outPath, completionHandler: { (path) -> () in
-                    Consolidator.removeFiles(hourMovies)
-                })
-            } catch {
-                print("-- could not merge movies, \(error)")
+            Task {
+                do {
+                    try await MovieMaker.mergeMovies(hourMovies, outPath: outPath, completionHandler: { (path) -> () in
+                        Consolidator.removeFiles(hourMovies)
+                    })
+                } catch {
+                    print("-- could not merge movies, \(error)")
+                }
             }
         }
     }

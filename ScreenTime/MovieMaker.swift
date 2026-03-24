@@ -64,7 +64,7 @@ open class MovieMaker {
         
         // Create Input
         var videoSettings = [String:AnyObject]()
-        videoSettings[AVVideoCodecKey] = AVVideoCodecH264 as AnyObject?
+        videoSettings[AVVideoCodecKey] = AVVideoCodecType.h264 as AnyObject?
         videoSettings[AVVideoWidthKey] = width as AnyObject?
         videoSettings[AVVideoHeightKey] = height as AnyObject?
         
@@ -84,32 +84,33 @@ open class MovieMaker {
     }
     
     //@objc(mergeMovieAtPaths:intoPath:completionHandler:error:)
-    open class func mergeMovies(_ inPath:[String], outPath:String, completionHandler:@escaping ((_ path:String) -> ())) throws {
-        
+    open class func mergeMovies(_ inPath:[String], outPath:String, completionHandler:@escaping ((_ path:String) -> ())) async throws {
+
         let composition = AVMutableComposition()
-        
+
         guard let composedTrack = composition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid) else {
             throw NSError(domain: "ScreenTime", code: 0, userInfo: [NSLocalizedDescriptionKey:"Cannot add video track"])
         }
-        
+
         var time = kCMTimeZero
-        
-        try inPath.forEach { (inPath) -> () in
-            
-            let fileURL = URL(fileURLWithPath: inPath)
+
+        for path in inPath {
+
+            let fileURL = URL(fileURLWithPath: path)
             let asset = AVURLAsset(url: fileURL)
-            let videoTracks = asset.tracks(withMediaType: .video)
-            
+            let videoTracks = try await asset.loadTracks(withMediaType: .video)
+
             guard let firstTrack = videoTracks.first else {
-                print("-- no first track in \(inPath)")
-                return
+                print("-- no first track in \(path)")
+                continue
             }
-            
-            let timeRange = CMTimeRangeMake(kCMTimeZero, asset.duration)
-            
+
+            let duration = try await asset.load(.duration)
+            let timeRange = CMTimeRangeMake(kCMTimeZero, duration)
+
             try composedTrack.insertTimeRange(timeRange, of: firstTrack, at: time)
-            
-            time = CMTimeAdd(time, asset.duration);
+
+            time = CMTimeAdd(time, duration);
         }
         
         /**/

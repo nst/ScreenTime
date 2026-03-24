@@ -92,9 +92,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let iconImage = NSImage(named: imageName)
         iconImage?.isTemplate = true
         
-        self.statusItem.image = iconImage
-        self.statusItem.highlightMode = true
-        self.statusItem.toolTip = "ScreenTime \(currentVersionString)"
+        self.statusItem.button?.image = iconImage
+        (self.statusItem.button?.cell as? NSButtonCell)?.highlightsBy = .changeBackgroundCellMask
+        self.statusItem.button?.toolTip = "ScreenTime \(currentVersionString)"
         self.statusItem.menu = self.menu;
         
         self.versionMenuItem.title = "Version \(currentVersionString)"
@@ -218,7 +218,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     @IBAction func openFolder(_ sender:NSControl) {
-        NSWorkspace.shared.openFile(dirPath)
+        NSWorkspace.shared.open(URL(fileURLWithPath: dirPath))
     }
     
     @IBAction func toggleSkipScreensaver(_ sender:NSControl) {
@@ -249,7 +249,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let imageName = NSImage.Name(rawValue: captureWasPaused ? "ScreenTime" : "ScreenTimePaused")
         if let iconImage = NSImage(named: imageName) {
             iconImage.isTemplate = true
-            self.statusItem.image = iconImage
+            self.statusItem.button?.image = iconImage
         } else {
             print("-- Error: cannot get image named \(imageName)")
         }
@@ -412,7 +412,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func historyItemAction(_ menuItem:NSMenuItem) {
         if let path = menuItem.representedObject as? String {
             print("-- open \(path)")
-            NSWorkspace().openFile(path)
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
         }
     }
 }
