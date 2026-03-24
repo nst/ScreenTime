@@ -59,8 +59,12 @@ class Consolidator {
             print("-- cannot get first image at \(jpgPaths.first!)")
             return
         }
-        
-        guard let movieMaker = MovieMaker(path: moviePath, frameSize: existingFirstImage.size, fps: UInt(fps)) else { return }
+
+        // Use pixel dimensions, not point dimensions, to preserve Retina resolution
+        guard let firstRep = existingFirstImage.representations.first else { return }
+        let pixelSize = CGSize(width: firstRep.pixelsWide, height: firstRep.pixelsHigh)
+
+        guard let movieMaker = MovieMaker(path: moviePath, frameSize: pixelSize, fps: UInt(fps)) else { return }
         
         for jpgPath in jpgPaths {
             
