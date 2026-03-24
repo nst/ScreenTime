@@ -116,6 +116,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         self.historyDepthMenuItem.view = self.historyDepthView
         
+        let screenshotItem = NSMenuItem(title: "Take Screenshot Now", action: #selector(AppDelegate.takeScreenshotNow(_:)), keyEquivalent: "")
+        screenshotItem.target = self
+        self.menu.insertItem(screenshotItem, at: 10)
+//        self.menu.insertItem(NSMenuItem.separator(), at: 1)
+
         self.menu.delegate = self
         
         /**/
@@ -216,6 +221,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         pauseCaptureMenuItem.state = captureIsPaused ? .on : .off
     }
     
+    @objc func takeScreenshotNow(_ sender: Any) {
+        screenShooter.makeScreenshotsAndConsolidate(nil)
+    }
+
     @IBAction func about(_ sender:NSControl) {
         if let url = URL(string:"http://seriot.ch/screentime/") {
             NSWorkspace.shared.open(url)
