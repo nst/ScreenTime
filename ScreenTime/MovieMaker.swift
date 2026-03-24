@@ -131,7 +131,7 @@ open class MovieMaker {
         exporter.outputFileType = .mov
         exporter.shouldOptimizeForNetworkUse = true
         
-        exporter.exportAsynchronously(completionHandler: { () -> Void in
+        exporter.exportAsynchronously(completionHandler: { [exporter] () -> Void in
             /*
              AVAssetExportSessionStatusUnknown,
              AVAssetExportSessionStatusWaiting,

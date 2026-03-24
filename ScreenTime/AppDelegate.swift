@@ -116,15 +116,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         self.historyDepthMenuItem.view = self.historyDepthView
         
-        let screenshotItem = NSMenuItem(title: "Take Screenshot Now", action: #selector(AppDelegate.takeScreenshotNow(_:)), keyEquivalent: "")
-        screenshotItem.target = self
-        self.menu.insertItem(screenshotItem, at: 10)
-
-        let createMovieItem = NSMenuItem(title: "Create Movie Now", action: #selector(AppDelegate.createMovieNow(_:)), keyEquivalent: "")
-        createMovieItem.target = self
-        self.menu.insertItem(createMovieItem, at: 11)
-        self.menu.insertItem(NSMenuItem.separator(), at: 12)
-
         self.menu.delegate = self
         
         /**/
@@ -411,6 +402,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let commandKeyIsPressed = modifierFlags.contains(.command)
 
         if(optionKeyIsPressed && commandKeyIsPressed) {
+            createMovieNow(self)
+        } else if(optionKeyIsPressed) {
             screenShooter.makeScreenshotsAndConsolidate(nil)
         }
         self.versionMenuItem.isHidden = optionKeyIsPressed == false;
