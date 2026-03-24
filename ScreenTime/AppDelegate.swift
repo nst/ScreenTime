@@ -80,10 +80,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
-        
+
         let defaults = ["SecondsBetweenScreenshots":60, "FramesPerSecond":2]
         UserDefaults.standard.register(defaults: defaults)
-        
+
+        // Request screen capture permission once at first launch
+        if !CGPreflightScreenCaptureAccess() {
+            CGRequestScreenCaptureAccess()
+        }
+
         /**/
         
         let currentVersionString = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString")!
