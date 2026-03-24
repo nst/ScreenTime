@@ -27,9 +27,13 @@ class LaunchServicesHelper {
     
     var itemReferencesInLoginItems: (existingItem: LSSharedFileListItem?, lastItem: LSSharedFileListItem?) {
         let itemURL = UnsafeMutablePointer<Unmanaged<CFURL>?>.allocate(capacity: 1)
-        let loginItemsList = LSSharedFileListCreate(nil, kLSSharedFileListSessionLoginItems.takeRetainedValue(), nil).takeRetainedValue()
+        guard let loginItemsList = LSSharedFileListCreate(nil, kLSSharedFileListSessionLoginItems.takeRetainedValue(), nil)?.takeRetainedValue() else {
+            return (nil, nil)
+        }
         // Can't cast directly from CFArray to Swift Array, so the CFArray needs to be bridged to a NSArray first
-        let loginItemsListSnapshot: NSArray = LSSharedFileListCopySnapshot(loginItemsList, nil).takeRetainedValue()
+        guard let loginItemsListSnapshot = LSSharedFileListCopySnapshot(loginItemsList, nil)?.takeRetainedValue() as NSArray? else {
+            return (nil, nil)
+        }
         if let loginItems = loginItemsListSnapshot as? [LSSharedFileListItem] {
             for loginItem in loginItems {
                 if LSSharedFileListItemResolve(loginItem, 0, itemURL, nil) == noErr {
@@ -49,13 +53,15 @@ class LaunchServicesHelper {
     
     func toggleLaunchAtStartup() {
         let itemReferences = itemReferencesInLoginItems
-        let loginItemsList = LSSharedFileListCreate(nil, kLSSharedFileListSessionLoginItems.takeRetainedValue(), nil).takeRetainedValue()
+        guard let loginItemsList = LSSharedFileListCreate(nil, kLSSharedFileListSessionLoginItems.takeRetainedValue(), nil)?.takeRetainedValue() else {
+            return
+        }
         if let existingItem = itemReferences.existingItem {
             // Remove application from login items
             LSSharedFileListItemRemove(loginItemsList, existingItem)
-        } else {
+        } else if let lastItem = itemReferences.lastItem {
             // Add application to login items
-            LSSharedFileListInsertItemURL(loginItemsList, itemReferences.lastItem, nil, nil, applicationURL as CFURL!, nil, nil)
+            LSSharedFileListInsertItemURL(loginItemsList, lastItem, nil, nil, applicationURL as CFURL, nil, nil)
         }
     }
 }
