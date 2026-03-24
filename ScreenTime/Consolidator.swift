@@ -81,11 +81,14 @@ class Consolidator {
             }
             
             _ = movieMaker.appendImageFromDrawing({ (context) -> () in
-                
-                // draw image
-                let rect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+
+                // draw image using pixel dimensions to fill the entire frame
+                let rep = image.representations.first
+                let drawWidth = rep != nil ? CGFloat(rep!.pixelsWide) : image.size.width
+                let drawHeight = rep != nil ? CGFloat(rep!.pixelsHigh) : image.size.height
+                let rect = CGRect(x: 0, y: 0, width: drawWidth, height: drawHeight)
                 image.draw(in: rect)
-                
+
                 // draw string frame
                 let STRING_RECT_ORIGIN_X : CGFloat = rect.size.width - 320
                 let STRING_RECT_ORIGIN_Y : CGFloat = 32

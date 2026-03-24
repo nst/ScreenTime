@@ -119,7 +119,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let screenshotItem = NSMenuItem(title: "Take Screenshot Now", action: #selector(AppDelegate.takeScreenshotNow(_:)), keyEquivalent: "")
         screenshotItem.target = self
         self.menu.insertItem(screenshotItem, at: 10)
-//        self.menu.insertItem(NSMenuItem.separator(), at: 1)
+
+        let createMovieItem = NSMenuItem(title: "Create Movie Now", action: #selector(AppDelegate.createMovieNow(_:)), keyEquivalent: "")
+        createMovieItem.target = self
+        self.menu.insertItem(createMovieItem, at: 11)
+        self.menu.insertItem(NSMenuItem.separator(), at: 12)
 
         self.menu.delegate = self
         
@@ -223,6 +227,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @objc func takeScreenshotNow(_ sender: Any) {
         screenShooter.makeScreenshotsAndConsolidate(nil)
+    }
+
+    @objc func createMovieNow(_ sender: Any) {
+        let c = Consolidator(dirPath: self.dirPath)
+        do {
+            try c.consolidateScreenshotsIntoHourMovies()
+            try c.consolidateHourMoviesIntoDayMovies()
+        } catch {
+            print("-- cannot consolidate, error \(error)")
+        }
     }
 
     @IBAction func about(_ sender:NSControl) {
