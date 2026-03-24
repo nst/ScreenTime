@@ -91,15 +91,21 @@ class ScreenShooter {
             return
         }
 
+        print("-- makeScreenshotsAndConsolidate, preflight: \(CGPreflightScreenCaptureAccess())")
+
         Task {
             do {
-                let content = try await SCShareableContent.current
+                let content = try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: true)
                 let displays = content.displays
+                print("-- found \(displays.count) display(s)")
 
                 for display in displays {
+                    print("-- capturing display \(display.displayID) (\(display.width)x\(display.height))")
                     if let image = await self.takeScreenshot(display) {
                         let displayIDForFilename = "\(display.displayID)"
                         _ = self.writeScreenshot(image, displayIDForFilename: displayIDForFilename)
+                    } else {
+                        print("-- takeScreenshot returned nil for display \(display.displayID)")
                     }
                 }
             } catch {

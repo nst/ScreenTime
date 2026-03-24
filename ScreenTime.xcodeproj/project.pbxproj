@@ -369,9 +369,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ScreenTime/ScreenTime.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				CODE_SIGN_ENTITLEMENTS = ScreenTime/ScreenTime.entitlements;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = VBYRKYS73S;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = ScreenTime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -387,9 +388,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ScreenTime/ScreenTime.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				CODE_SIGN_ENTITLEMENTS = ScreenTime/ScreenTime.entitlements;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = VBYRKYS73S;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = ScreenTime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
